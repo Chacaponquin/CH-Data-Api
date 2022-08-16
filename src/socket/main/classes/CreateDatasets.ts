@@ -27,18 +27,32 @@ export class CreateDatasets {
   private datasets: Dataset[] = [];
   private returnDatasets: ReturnDataset[] = [];
   private socket: Socket;
+  private documentsToCreate: number = 0;
+  private documentsCreated: number = 0;
 
   constructor(socket: Socket, data: Dataset[]) {
     this.socket = socket;
     if (!data || !data.length) throw new InvalidCreateDataInputError("data");
-    else this.datasets = data;
+    else {
+      this.datasets = data;
+    }
   }
 
   public async createData(): Promise<ReturnDataset[]> {
+    let cont = 0;
+    for (const dat of this.datasets) cont += dat.limit;
+    this.documentsToCreate = cont;
+    this.documentsCreated = 0;
+
     for (let i = 0; i < this.datasets.length; i++) {
       let datasetFields: any[] = [];
       for (let j = 0; j < this.datasets[i].limit; j++) {
         const fieldData = await this.createDataFields(this.datasets[i].fields);
+
+        const porcent = (this.documentsCreated * 100) / this.documentsToCreate;
+        this.socket.emit("documentCreated", { porcent });
+
+        this.documentsCreated += 1;
 
         datasetFields.push(fieldData);
       }
@@ -75,7 +89,6 @@ export class CreateDatasets {
 
       if (value !== undefined) {
         fieldsData = { ...fieldsData, [field.name]: value };
-        this.socket.emit("fieldCreated");
       } else throw new InvalidDataTypeError(field.dataType.type);
     }
 

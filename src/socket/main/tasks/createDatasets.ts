@@ -17,7 +17,7 @@ export const createDatasets = async (
     const creatorDatasets = new CreateDatasets(socket, datasets);
 
     const allData: ReturnDataset[] = await creatorDatasets.createData();
-    console.log(allData);
+
     const creator = new CreateDataFile(allData, config);
 
     const url = await creator.generateFile(config.fileType);
