@@ -50,7 +50,12 @@ app.use(passport.session());
 
 const httpServer = http.createServer(app);
 
-const io = new Server(httpServer, { cors: { origin: "*" } });
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
 io.on("connection", SocketTasks);
 
