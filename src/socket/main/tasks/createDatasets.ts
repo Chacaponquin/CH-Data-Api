@@ -7,7 +7,8 @@ import { Socket } from "socket.io";
 export const createDatasets = async (socket: Socket, args: any = {}) => {
   const currentUser = args.user as any;
 
-  try {
+  socket.emit("getDownUrl");
+  /*try {
     const datasets: Dataset[] = args.datasets as Dataset[];
     const config = args.config as ConfigSchema;
 
@@ -25,5 +26,5 @@ export const createDatasets = async (socket: Socket, args: any = {}) => {
   } catch (error) {
     console.log(error);
     socket.emit("createDatasetsError", error);
-  }
+  }*/
 };
