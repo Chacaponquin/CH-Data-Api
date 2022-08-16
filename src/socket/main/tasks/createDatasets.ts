@@ -7,14 +7,14 @@ import { Socket } from "socket.io";
 export const createDatasets = async (socket: Socket, args: any = {}) => {
   const currentUser = args.user as any;
 
-  socket.emit("getDownUrl");
-  /*try {
+  try {
     const datasets: Dataset[] = args.datasets as Dataset[];
     const config = args.config as ConfigSchema;
 
     const creatorDatasets = new CreateDatasets(datasets);
 
     const allData: ReturnDataset[] = await creatorDatasets.createData();
+    console.log(allData);
     const creator = new CreateDataFile(allData, config);
 
     const url = await creator.generateFile(config.fileType);
@@ -26,5 +26,5 @@ export const createDatasets = async (socket: Socket, args: any = {}) => {
   } catch (error) {
     console.log(error);
     socket.emit("createDatasetsError", error);
-  }*/
+  }
 };
