@@ -8,8 +8,5 @@ export const SocketTasks = (socket: Socket) => {
 
   setInterval(() => socket.emit("Hola"), 1000);
 
-  socket.on(
-    "createDatasets",
-    async (args) => await createDatasets(socket, args)
-  );
+  socket.on("createDatasets", (args) => createDatasets(socket, args));
 };
