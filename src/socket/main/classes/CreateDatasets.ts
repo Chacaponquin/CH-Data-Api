@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { Socket } from "socket.io";
 import DatasetSchema from "../../../db/schemas/DatasetSchema";
 import User from "../../../db/schemas/User";
 import { DataFields } from "../../../shared/classes/DataFields";
@@ -25,8 +26,10 @@ import { FormatterData } from "./FormatterData";
 export class CreateDatasets {
   private datasets: Dataset[] = [];
   private returnDatasets: ReturnDataset[] = [];
+  private socket: Socket;
 
-  constructor(data: Dataset[]) {
+  constructor(socket: Socket, data: Dataset[]) {
+    this.socket = socket;
     if (!data || !data.length) throw new InvalidCreateDataInputError("data");
     else this.datasets = data;
   }
@@ -70,9 +73,10 @@ export class CreateDatasets {
           break;
       }
 
-      if (value !== undefined)
+      if (value !== undefined) {
         fieldsData = { ...fieldsData, [field.name]: value };
-      else throw new InvalidDataTypeError(field.dataType.type);
+        this.socket.emit("fieldCreated");
+      } else throw new InvalidDataTypeError(field.dataType.type);
     }
 
     return fieldsData;

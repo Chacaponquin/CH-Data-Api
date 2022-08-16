@@ -10,14 +10,11 @@ export const createDatasets = async (
 ): Promise<void> => {
   const currentUser = args.user as any;
 
-  console.log(args);
-
   try {
     const datasets: Dataset[] = args.datasets as Dataset[];
     const config = args.config as ConfigSchema;
 
-    const creatorDatasets = new CreateDatasets(datasets);
-    console.log(createDatasets);
+    const creatorDatasets = new CreateDatasets(socket, datasets);
 
     const allData: ReturnDataset[] = await creatorDatasets.createData();
     console.log(allData);
