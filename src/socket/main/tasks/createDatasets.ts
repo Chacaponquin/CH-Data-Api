@@ -17,6 +17,7 @@ export const createDatasets = async (
     const config = args.config as ConfigSchema;
 
     const creatorDatasets = new CreateDatasets(datasets);
+    console.log(createDatasets);
 
     const allData: ReturnDataset[] = await creatorDatasets.createData();
     console.log(allData);
