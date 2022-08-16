@@ -4,8 +4,13 @@ import { CreateDataFile } from "../classes/CreateDataFile";
 import { CreateDatasets } from "../classes/CreateDatasets";
 import { Socket } from "socket.io";
 
-export const createDatasets = async (socket: Socket, args: any = {}) => {
+export const createDatasets = async (
+  socket: Socket,
+  args: any = {}
+): Promise<void> => {
   const currentUser = args.user as any;
+
+  console.log(args);
 
   try {
     const datasets: Dataset[] = args.datasets as Dataset[];
