@@ -21,9 +21,9 @@ export const createDatasets = async (socket: Socket, args: any = {}) => {
     if (currentUser && config.saveSchema)
       await creatorDatasets.saveDataSchema(currentUser._id);
 
-    socket.volatile.emit("getDownUrl", { downUrl: url });
+    socket.emit("getDownUrl", { downUrl: url });
   } catch (error) {
     console.log(error);
-    socket.volatile.emit("createDatasetsError", error);
+    socket.emit("createDatasetsError", error);
   }
 };
