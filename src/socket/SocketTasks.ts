@@ -3,6 +3,7 @@ import { createDatasets } from "./main/tasks/createDatasets";
 
 export const SocketTasks = (socket: Socket) => {
   socket.on("disconnect", () => console.log("Client Desconnected"));
+  socket.on("connection", () => console.log("Hola"));
 
   socket.on(
     "createDatasets",
