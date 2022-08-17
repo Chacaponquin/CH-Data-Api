@@ -1,7 +1,28 @@
-import { ReturnDataset, DatasetField } from "../interfaces/datasets.interface";
+import {
+  ReturnDataset,
+  DatasetField,
+} from "../../socket/main/interfaces/datasets.interface";
 
 export const FormatterData = {
   transformReturnData(data: ReturnDataset[]): any {},
+  capitalizeText(text: string): string {
+    let returnString = "";
+    let mayus = false;
+
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] != " " && text[i] != "_" && text[i] != "-") {
+        returnString = returnString.concat(
+          mayus ? text[i].toUpperCase() : text[i].toLowerCase()
+        );
+        mayus = false;
+      } else {
+        mayus = true;
+        continue;
+      }
+    }
+
+    return returnString;
+  },
   getObjectSchema(fieldsData: DatasetField[]): any {
     let object = {};
 

@@ -21,7 +21,7 @@ import {
   FieldArgument,
   ReturnDataset,
 } from "../interfaces/datasets.interface";
-import { FormatterData } from "./FormatterData";
+import { FormatterData } from "../../../shared/classes/FormatterData";
 
 export class CreateDatasets {
   private datasets: Dataset[] = [];
