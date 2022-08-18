@@ -1,8 +1,6 @@
 import { faker, FakerError } from "@faker-js/faker";
-import {
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionSchema,
-} from "../../interfaces/fields.interface";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 
 export const DateField = (): TypeOptionSchema[] => {
   return [
@@ -13,8 +11,8 @@ export const DateField = (): TypeOptionSchema[] => {
       },
       name: "Date Soon",
       arguments: [
-        { argument: "days", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "refDate", inputType: INPUT_ARGUMENT_TYPE.DATE },
+        { argument: "days", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
       ],
     },
     {
@@ -22,8 +20,8 @@ export const DateField = (): TypeOptionSchema[] => {
       getValue: (args) => faker.date.past(args.years, args.refDate),
       name: "Date Past",
       arguments: [
-        { argument: "refDate", inputType: INPUT_ARGUMENT_TYPE.DATE },
-        { argument: "years", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
+        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
+        { argument: "years", inputType: ARGUMENT_TYPE.NUMBER },
       ],
     },
     {
@@ -33,20 +31,22 @@ export const DateField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "years",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
-        { argument: "refDate", inputType: INPUT_ARGUMENT_TYPE.DATE },
+        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
       ],
     },
     {
       exampleValue: faker.date.month(),
       getValue: () => faker.date.month(),
       name: "Month Name",
+      arguments: [],
     },
     {
       exampleValue: faker.date.weekday(),
       getValue: () => faker.date.weekday(),
       name: "Weekday",
+      arguments: [],
     },
     {
       exampleValue: faker.date.birthdate(),
@@ -57,8 +57,8 @@ export const DateField = (): TypeOptionSchema[] => {
         }),
       name: "BirthDate",
       arguments: [
-        { argument: "min", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "max", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
+        { argument: "min", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
       ],
     },
     {
@@ -73,8 +73,8 @@ export const DateField = (): TypeOptionSchema[] => {
         ),
       name: "Date Between",
       arguments: [
-        { argument: "from", inputType: INPUT_ARGUMENT_TYPE.DATE },
-        { argument: "to", inputType: INPUT_ARGUMENT_TYPE.DATE },
+        { argument: "from", inputType: ARGUMENT_TYPE.DATE },
+        { argument: "to", inputType: ARGUMENT_TYPE.DATE },
       ],
     },
   ];

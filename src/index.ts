@@ -12,7 +12,7 @@ import { Server } from "socket.io";
 import { createContextUser } from "./shared/tasks/createContextUser";
 import { SocketTasks } from "./socket/SocketTasks";
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 
 const app: Express = express();
 

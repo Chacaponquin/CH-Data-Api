@@ -1,5 +1,5 @@
 import { Dataset, ReturnDataset } from "../interfaces/datasets.interface";
-import { ConfigSchema } from "../interfaces/config.interface";
+import { InputConfigSchema } from "../../../shared/interfaces/config.interface";
 import { CreateDataFile } from "../classes/CreateDataFile";
 import { CreateDatasets } from "../classes/CreateDatasets";
 import { Socket } from "socket.io";
@@ -12,7 +12,7 @@ export const createDatasets = async (
 
   try {
     const datasets: Dataset[] = args.datasets as Dataset[];
-    const config = args.config as ConfigSchema;
+    const config = args.config as InputConfigSchema;
 
     const creatorDatasets = new CreateDatasets(socket, datasets);
 
@@ -20,7 +20,7 @@ export const createDatasets = async (
 
     const creator = new CreateDataFile(allData, config);
 
-    const url = await creator.generateFile(config.fileType);
+    const url = await creator.generateFile();
 
     if (currentUser && config.saveSchema)
       await creatorDatasets.saveDataSchema(currentUser._id);

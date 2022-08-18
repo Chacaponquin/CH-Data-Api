@@ -17,10 +17,30 @@ import {
   SystemField,
   InternetField,
   VehicleField,
-} from "../dataSchemas";
-import { InitialOptionSchema } from "../interfaces/fields.interface";
+} from "../dataSchemas/FieldsGenerators";
+import {
+  InitialOptionSchema,
+  ApiParentData,
+} from "../interfaces/fields.interface";
+import { FormatterData } from "./FormatterData";
 
 export class DataFields {
+  public async getApiSections(): Promise<ApiParentData[]> {
+    const intialFields = await this.getFields();
+
+    return intialFields.map((p: any) => {
+      p.fields = p.fields.map((f: any) => {
+        const route = `/api/${p.parent}/${FormatterData.capitalizeText(
+          f.name
+        )}`;
+
+        return { ...f, route };
+      });
+
+      return p;
+    });
+  }
+
   public async getFields(): Promise<InitialOptionSchema[]> {
     return [
       { parent: "ID", fields: IDField() },

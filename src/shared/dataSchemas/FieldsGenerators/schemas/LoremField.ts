@@ -1,8 +1,6 @@
 import { faker } from "@faker-js/faker";
-import {
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionSchema,
-} from "../../interfaces/fields.interface";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 
 export const LoremField = (): TypeOptionSchema[] => {
   return [
@@ -13,7 +11,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "count",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
       ],
     },
@@ -24,7 +22,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "count",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
       ],
     },
@@ -35,7 +33,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "count",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
       ],
     },
@@ -46,7 +44,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "count",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
       ],
     },
@@ -54,6 +52,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       name: "Text",
       exampleValue: faker.lorem.text(),
       getValue: () => faker.lorem.text(),
+      arguments: [],
     },
     {
       name: "Words",
@@ -62,7 +61,7 @@ export const LoremField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "count",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
       ],
     },

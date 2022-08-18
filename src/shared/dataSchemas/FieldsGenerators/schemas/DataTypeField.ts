@@ -1,9 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { InvalidArgumentError } from "../../errors/InvalidArgument";
-import {
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionSchema,
-} from "../../interfaces/fields.interface";
+import { InvalidArgumentError } from "../../../errors/InvalidArgument";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 
 export const DataTypeField = (): TypeOptionSchema[] => {
   return [
@@ -19,22 +17,21 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       },
       exampleValue: faker.datatype.number(),
       arguments: [
-        { argument: "min", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "max", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
+        { argument: "min", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
       ],
     },
     {
       exampleValue: faker.datatype.array(),
       getValue: (args) => faker.datatype.array(args.length),
       name: "Array (Random values)",
-      arguments: [
-        { argument: "length", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-      ],
+      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
     },
     {
       exampleValue: faker.datatype.boolean,
       getValue: () => faker.datatype.boolean(),
       name: "Boolean",
+      arguments: [],
     },
     {
       exampleValue: faker.datatype.number(),
@@ -59,19 +56,17 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "min",
-          inputType: INPUT_ARGUMENT_TYPE.NUMBER,
+          inputType: ARGUMENT_TYPE.NUMBER,
         },
-        { argument: "max", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "precision", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
+        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
       ],
     },
     {
       exampleValue: faker.datatype.hexadecimal,
       getValue: (args) => faker.datatype.hexadecimal(args.length),
       name: "Hexadecimal",
-      arguments: [
-        { argument: "length", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-      ],
+      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
     },
     {
       exampleValue: faker.datatype.float(),
@@ -96,10 +91,10 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "min",
-          inputType: INPUT_ARGUMENT_TYPE.FLOAT,
+          inputType: ARGUMENT_TYPE.FLOAT,
         },
-        { argument: "max", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
-        { argument: "precision", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
+        { argument: "max", inputType: ARGUMENT_TYPE.FLOAT },
+        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
       ],
     },
     {
@@ -157,14 +152,14 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       },
       name: "Matriz",
       arguments: [
-        { argument: "x_size", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "y_size", inputType: INPUT_ARGUMENT_TYPE.NUMBER },
-        { argument: "precision", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
-        { argument: "min", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
-        { argument: "max", inputType: INPUT_ARGUMENT_TYPE.FLOAT },
+        { argument: "x_size", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "y_size", inputType: ARGUMENT_TYPE.NUMBER },
+        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
+        { argument: "min", inputType: ARGUMENT_TYPE.FLOAT },
+        { argument: "max", inputType: ARGUMENT_TYPE.FLOAT },
         {
           argument: "dataType",
-          inputType: INPUT_ARGUMENT_TYPE.SELECT,
+          inputType: ARGUMENT_TYPE.SELECT,
           selectValues: ["Int", "Float"],
         },
       ],

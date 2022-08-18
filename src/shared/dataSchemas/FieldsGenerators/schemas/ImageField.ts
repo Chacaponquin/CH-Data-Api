@@ -1,11 +1,8 @@
 import { faker } from "@faker-js/faker";
-import Images from "../../../db/schemas/Images";
-import { CreateFieldObjectError } from "../../errors/CreateFieldObjectError";
-import { randomChoiceList } from "../../helpers/randomChoice";
-import {
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionSchema,
-} from "../../interfaces/fields.interface";
+import Images from "../../../../db/schemas/Images";
+import { CreateFieldObjectError } from "../../../errors/CreateFieldObjectError";
+import { randomChoiceList } from "../../../helpers/randomChoice";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
 
 export const ImageField = async (): Promise<TypeOptionSchema[]> => {
   let allTopics: TypeOptionSchema[] = [];
@@ -17,6 +14,7 @@ export const ImageField = async (): Promise<TypeOptionSchema[]> => {
           name: el.topic,
           exampleValue: randomChoiceList(el.images),
           getValue: () => randomChoiceList(el.images),
+          arguments: [],
         };
       });
     })
@@ -30,9 +28,11 @@ export const ImageField = async (): Promise<TypeOptionSchema[]> => {
       name: "Avatar Photo",
       exampleValue: faker.image.avatar(),
       getValue: () => faker.image.avatar(),
+      arguments: [],
     },
     {
       name: "Avatar Icon",
+
       exampleValue: `https://api.multiavatar.com/${Number(
         Math.random() * 1000
       ).toFixed(0)}.svg`,
@@ -40,6 +40,7 @@ export const ImageField = async (): Promise<TypeOptionSchema[]> => {
         `https://api.multiavatar.com/${Number(Math.random() * 1000).toFixed(
           0
         )}.svg`,
+      arguments: [],
     },
   ];
 };

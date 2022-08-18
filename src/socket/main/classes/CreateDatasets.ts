@@ -4,11 +4,8 @@ import DatasetSchema from "../../../db/schemas/DatasetSchema";
 import User from "../../../db/schemas/User";
 import { DataFields } from "../../../shared/classes/DataFields";
 import { randomChoiceList } from "../../../shared/helpers/randomChoice";
-import {
-  InitialOptionSchema,
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionArgument,
-} from "../../../shared/interfaces/fields.interface";
+import { InitialOptionSchema } from "../../../shared/interfaces/fields.interface";
+import { ArgumentSchema } from "../../../shared/interfaces/dataArgument.interface";
 import { InvalidCreateDataInputError } from "../errors/InvalidCreateDataInputError";
 import { InvalidDataTypeError } from "../errors/InvalidDataTypeError";
 import { InvalidParentFieldError } from "../errors/InvalidParentFieldError";
@@ -18,10 +15,10 @@ import {
   Dataset,
   DatasetField,
   DATA_TYPES,
-  FieldArgument,
   ReturnDataset,
 } from "../interfaces/datasets.interface";
 import { FormatterData } from "../../../shared/classes/FormatterData";
+import { ARGUMENT_TYPE } from "../../../shared/interfaces/fieldsTypes.enum";
 
 export class CreateDatasets {
   private datasets: Dataset[] = [];
@@ -109,26 +106,35 @@ export class CreateDatasets {
       if (typeFound) {
         let value;
 
-        if (typeFound.arguments && typeFound.arguments.length > 0) {
-          const parameters = this.validateArguments(
-            field.args,
-            typeFound.arguments
-          );
+        this.validateArguments(field.args, typeFound.arguments);
 
-          value = await this.generateValueByConfig(
-            field,
-            async () => await typeFound.getValue(parameters)
-          );
-        } else {
-          value = await this.generateValueByConfig(
-            field,
-            async () => await typeFound.getValue({})
-          );
-        }
+        value = await this.generateValueByConfig(
+          field,
+          async () => await typeFound.getValue(field.args || {})
+        );
 
         return value;
       } else throw new InvalidTypeError(field.type.type);
     } else throw new InvalidParentFieldError(field.type.parent);
+  }
+
+  private validateArguments(args: any, elementArgs: ArgumentSchema[]): void {
+    const keys = Object.keys(args) as string[];
+    for (let i = 0; i < keys.length; i++) {
+      for (const elementArg of elementArgs) {
+        if (elementArg.argument === keys[i]) {
+          if (elementArg.inputType === ARGUMENT_TYPE.SELECT) {
+            if (elementArg.selectValues) {
+              const foundValue = elementArg.selectValues.find(
+                (el) => el === Object.values(args)[i]
+              );
+
+              if (!foundValue) throw new InvalidCreateDataInputError("select");
+            }
+          }
+        }
+      }
+    }
   }
 
   private async generateValueByConfig(
@@ -160,34 +166,6 @@ export class CreateDatasets {
     }
 
     return returnValue;
-  }
-
-  private validateArguments(
-    args: FieldArgument[],
-    typeArgs: TypeOptionArgument[]
-  ) {
-    let returnArgs = {};
-
-    for (const typeArg of typeArgs) {
-      for (const fielArg of args) {
-        if (typeArg.argument === fielArg.field) {
-          if (typeArg.inputType === INPUT_ARGUMENT_TYPE.SELECT) {
-            if (typeArg.selectValues) {
-              const foundValue = typeArg.selectValues?.find(
-                (el) => el == fielArg.value
-              );
-
-              returnArgs = { ...returnArgs, [typeArg.argument]: foundValue };
-            } else
-              throw new Error("Debe tener valores a seleccionar. Arreglalo");
-          } else {
-            returnArgs = { ...returnArgs, [typeArg.argument]: fielArg.value };
-          }
-        }
-      }
-    }
-
-    return returnArgs;
   }
 
   private generateRefFields(): void {

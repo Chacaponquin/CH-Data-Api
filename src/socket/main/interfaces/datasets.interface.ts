@@ -15,17 +15,12 @@ export interface DatasetField {
   type: TypeSchema;
   id: number;
   dataType: MixedDataType | RefDataType | ArrayDataType | SingleValueDataType;
-  args: FieldArgument[];
+  args: any;
   isPosibleNull: boolean;
   isArray: {
     min: number;
     max: number;
   };
-}
-
-export interface FieldArgument {
-  field: string;
-  value: any;
 }
 
 export interface TypeSchema {
@@ -45,6 +40,7 @@ export interface RefDataType extends DataTypeSchema {
 }
 
 interface SingleValueDataType extends DataTypeSchema {}
+
 interface ArrayDataType extends DataTypeSchema {
   limit: number;
 }

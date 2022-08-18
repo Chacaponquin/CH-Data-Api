@@ -1,6 +1,6 @@
-import Video from "../../../db/schemas/Video";
-import { randomChoiceList } from "../../helpers/randomChoice";
-import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import Video from "../../../../db/schemas/Video";
+import { randomChoiceList } from "../../../helpers/randomChoice";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
 
 export const VideoField = async (): Promise<TypeOptionSchema[]> => {
   const allVideos = await Video.find();
@@ -11,6 +11,7 @@ export const VideoField = async (): Promise<TypeOptionSchema[]> => {
         name: el.topic,
         exampleValue: randomChoiceList(el.videos),
         getValue: () => randomChoiceList(el.videos),
+        arguments: [],
       };
     }),
   ];

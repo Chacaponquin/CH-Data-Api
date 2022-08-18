@@ -1,13 +1,11 @@
 import { faker } from "@faker-js/faker";
-import {
-  INPUT_ARGUMENT_TYPE,
-  TypeOptionSchema,
-} from "../../interfaces/fields.interface";
+import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 
 const NAME_FIELD_ARGUMENTS = [
   {
     argument: "gender",
-    inputType: INPUT_ARGUMENT_TYPE.SELECT,
+    inputType: ARGUMENT_TYPE.SELECT,
     selectValues: ["Male", "Female"],
   },
 ];
@@ -59,6 +57,7 @@ export const NameField = (): TypeOptionSchema[] => {
       name: "Suffix",
       getValue: () => faker.name.suffix(),
       exampleValue: faker.name.suffix(),
+      arguments: [],
     },
   ];
 };

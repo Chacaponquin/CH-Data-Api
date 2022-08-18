@@ -1,4 +1,7 @@
-import { ConfigSchema, FILE_TYPE } from "../interfaces/config.interface";
+import {
+  InputConfigSchema,
+  FILE_TYPE,
+} from "../../../shared/interfaces/config.interface";
 import fs from "fs";
 import { ReturnDataset } from "../interfaces/datasets.interface";
 import { InvalidConfig } from "../errors/InvalidConfig";
@@ -6,22 +9,33 @@ import { Parser } from "json2csv";
 import AdminZim from "adm-zip";
 import path from "path";
 import { InvalidFileTypeError } from "../errors/InvalidFileTypeError";
+import { CodeGenerator } from "../../../shared/classes/CodeGenerator/CodeGenerator";
 
 export class CreateDataFile {
-  data: ReturnDataset[] = [];
+  private data: ReturnDataset[] = [];
+  private config: InputConfigSchema;
 
-  constructor(data: any[], config: ConfigSchema) {
+  constructor(data: any[], config: InputConfigSchema) {
     if (!config) throw new InvalidConfig();
+    else this.config = config;
 
     this.data = data;
   }
 
-  public async generateFile(
-    fileType: FILE_TYPE = FILE_TYPE.JSON
-  ): Promise<string> {
+  public async generateFile(): Promise<string> {
+    const fileType = this.config.file.fileType;
+
     if (fileType === FILE_TYPE.JSON) return await this.generateJSONFile();
     else if (fileType === FILE_TYPE.CSV) return await this.generateCSV();
+    else if (fileType === FILE_TYPE.JAVASCRIPT)
+      return await this.generateCodeFile();
     else throw new InvalidFileTypeError();
+  }
+
+  private async generateCodeFile(): Promise<string> {
+    const generator = new CodeGenerator(this.data, this.config.file);
+    const fileURL = await generator.generateFile();
+    return fileURL;
   }
 
   public async generateCSV(): Promise<string> {
