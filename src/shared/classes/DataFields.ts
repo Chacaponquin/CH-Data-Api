@@ -30,9 +30,9 @@ export class DataFields {
 
     return intialFields.map((p: any) => {
       p.fields = p.fields.map((f: any) => {
-        const route = `/api/${p.parent}/${FormatterData.capitalizeText(
-          f.name
-        )}`;
+        const route = `/api/${FormatterData.capitalizeText(
+          p.parent
+        )}/${FormatterData.capitalizeText(f.name)}`;
 
         return { ...f, route };
       });

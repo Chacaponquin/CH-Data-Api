@@ -1,5 +1,6 @@
 import { ReturnDataset } from "../../../../socket/main/interfaces/datasets.interface";
 import { Generator } from "./Generator";
+import { FormatterData } from "../../FormatterData";
 import fs from "fs";
 
 export class JavascriptGenerator extends Generator {
@@ -11,9 +12,9 @@ export class JavascriptGenerator extends Generator {
     let returnData = ``;
 
     for (const dat of this.data) {
-      returnData += `const ${dat.name} = ${this.generateDatasetArray(
-        dat.documents
-      )};\n`;
+      returnData += `const ${FormatterData.capitalizeText(
+        dat.name
+      )} = ${this.generateDatasetArray(dat.documents)};\n`;
     }
 
     const fieldName = `data${Date.now()}.js`;
@@ -27,18 +28,13 @@ export class JavascriptGenerator extends Generator {
     let returnArray = `[`;
 
     for (const field of datasetFields) {
-      const values = Object.values(field) as string[];
+      const values = Object.values(field) as any[];
 
       let objectData = `{`;
 
       for (let i = 0; i < values.length; i++) {
         let key = Object.keys(field)[i];
-        let value = "";
-
-        if (typeof values[i] == "string")
-          value = this.generateString(values[i]);
-        else if (typeof values[i] == "number") value = values[i];
-
+        const value = this.filterTypeValue(values[i]);
         objectData += `${key}: ${value},`;
       }
 
@@ -47,6 +43,31 @@ export class JavascriptGenerator extends Generator {
     }
 
     returnArray += "] ";
+
+    return returnArray;
+  }
+
+  private filterTypeValue(value: any): string {
+    let returnValue = "undefined";
+
+    if (typeof value == "string") returnValue = this.generateString(value);
+    else if (typeof value == "number" || typeof value == "boolean")
+      returnValue = `${value}`;
+    else if (typeof value == "object") {
+      if (Array.isArray(value)) returnValue = this.generateArray(value);
+    }
+
+    return returnValue;
+  }
+
+  private generateArray(array: string[] | number[]): string {
+    let returnArray = "[";
+
+    for (let value of array) {
+      returnArray += `${this.filterTypeValue(value)}, `;
+    }
+
+    returnArray += "]";
 
     return returnArray;
   }
