@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { InvalidArgumentError } from "../../../errors/InvalidArgument";
+import { randomChoiceList } from "../../../helpers/randomChoice";
 import { TypeOptionSchema } from "../../../interfaces/fields.interface";
 import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 
@@ -29,7 +30,7 @@ export const DataTypeField = (): TypeOptionSchema[] => {
     },
     {
       exampleValue: faker.datatype.boolean,
-      getValue: () => faker.datatype.boolean(),
+      getValue: () => randomChoiceList([true, false]),
       name: "Boolean",
       arguments: [],
     },
