@@ -105,6 +105,16 @@ export const DataTypeField = (): TypeOptionSchema[] => {
         [1, 1, 0, 0],
       ],
       getValue: (args) => {
+        const x_size =
+          args.x_size || faker.datatype.number({ min: 1, max: 10 });
+        const y_size =
+          args.y_size || faker.datatype.number({ min: 1, max: 10 });
+        const min = args.min || faker.datatype.number({ min: 1, max: 10 });
+        const max = args.max || faker.datatype.number({ min: min, max: 10 });
+        const precision =
+          args.precision ||
+          faker.datatype.number({ min: 0, max: 1, precision: 0.1 });
+
         if (args.x_size <= 0 || args.y_size <= 0)
           throw new InvalidArgumentError(
             "El tamaño de la matriz no puede ser un numero menor o igual a cero"
@@ -120,36 +130,30 @@ export const DataTypeField = (): TypeOptionSchema[] => {
             "La precicsion no puede ser un numero negativo"
           );
 
-        return new Array(args.y_size ? args.y_size : faker.datatype.number())
-          .fill(0)
-          .map((el) => {
-            return new Array(
-              args.x_size ? args.x_size : faker.datatype.number()
-            )
-              .fill(0)
-              .map((el) => {
-                let value;
+        return new Array(y_size).fill(0).map((el) => {
+          return new Array(x_size).fill(0).map((el) => {
+            let value;
 
-                if (args.dataType === "Int")
-                  value = faker.datatype.number({
-                    min: args.min,
-                    max: args.max,
-                  });
-                else if (args.dataType === "Float")
-                  value = faker.datatype.float({
-                    min: args.min,
-                    max: args.max,
-                    precision: args.precision,
-                  });
-                else
-                  value = faker.datatype.number({
-                    min: args.min,
-                    max: args.max,
-                  });
-
-                return value;
+            if (args.dataType === "Int")
+              value = faker.datatype.number({
+                min,
+                max,
               });
+            else if (args.dataType === "Float")
+              value = faker.datatype.float({
+                min,
+                max,
+                precision,
+              });
+            else
+              value = faker.datatype.number({
+                min,
+                max,
+              });
+
+            return value;
           });
+        });
       },
       name: "Matriz",
       arguments: [

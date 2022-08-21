@@ -22,8 +22,6 @@ export const signInUser = async (req: Request, res: Response) => {
           process.env.SECRET_WORD as string
         );
 
-        console.log(token);
-
         res.json({ token }).end();
       } else throw new WrongUser();
     } else throw new WrongUser();
