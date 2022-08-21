@@ -3,6 +3,11 @@ import { FILE_TYPE, FileOption } from "../../interfaces/config.interface";
 
 export const FileConfigSchema: FileOption[] = [
   {
+    fileType: FILE_TYPE.JSON,
+    arguments: [],
+  },
+  { fileType: FILE_TYPE.CSV, arguments: [] },
+  {
     fileType: FILE_TYPE.JAVASCRIPT,
     arguments: [
       {
@@ -13,8 +18,9 @@ export const FileConfigSchema: FileOption[] = [
     ],
   },
   {
-    fileType: FILE_TYPE.JSON,
-    arguments: [],
+    fileType: FILE_TYPE.TYPESCRIPT,
+    arguments: [
+      { argument: "generateInterfaces", inputType: ARGUMENT_TYPE.BOOLEAN },
+    ],
   },
-  { fileType: FILE_TYPE.CSV, arguments: [] },
 ];

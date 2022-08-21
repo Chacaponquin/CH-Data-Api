@@ -1,11 +1,11 @@
-import { ReturnDataset } from "../../../../socket/main/interfaces/datasets.interface";
 import { Generator } from "./Generator";
-import { FormatterData } from "../../FormatterData";
 import fs from "fs";
+import { FormatterData } from "../FormatterData";
+import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
 
 export class JavascriptGenerator extends Generator {
-  constructor(datasets: ReturnDataset[]) {
-    super(datasets);
+  constructor(datasets: ReturnDataset[], args: any) {
+    super(datasets, args);
   }
 
   public async generateCode(): Promise<string> {
@@ -24,27 +24,32 @@ export class JavascriptGenerator extends Generator {
     return `util/downloadData/${fieldName}`;
   }
 
-  private generateDatasetArray(datasetFields: any[]): string {
+  public generateDatasetArray(datasetFields: any[]): string {
     let returnArray = `[`;
 
-    for (const field of datasetFields) {
-      const values = Object.values(field) as any[];
-
-      let objectData = `{`;
-
-      for (let i = 0; i < values.length; i++) {
-        let key = Object.keys(field)[i];
-        const value = this.filterTypeValue(values[i]);
-        objectData += `${key}: ${value},`;
-      }
-
-      objectData += "},";
-      returnArray += `${objectData}`;
+    for (const doc of datasetFields) {
+      returnArray += `${this.generateObjectData(doc)}`;
     }
 
     returnArray += "] ";
 
     return returnArray;
+  }
+
+  public generateObjectData(doc: any): string {
+    let objectData = `{`;
+
+    const values = Object.values(doc) as any[];
+
+    for (let i = 0; i < values.length; i++) {
+      let key = Object.keys(doc)[i];
+      const value = this.filterTypeValue(values[i]);
+      objectData += `${key}: ${value},`;
+    }
+
+    objectData += "},";
+
+    return objectData;
   }
 
   private filterTypeValue(value: any): string {

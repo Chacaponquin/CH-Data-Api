@@ -9,7 +9,9 @@ import { Parser } from "json2csv";
 import AdminZim from "adm-zip";
 import path from "path";
 import { InvalidFileTypeError } from "../errors/InvalidFileTypeError";
-import { CodeGenerator } from "../../../shared/classes/CodeGenerator/CodeGenerator";
+import { Generator } from "../../../shared/classes/CodeGenerator/Generator";
+import { JavascriptGenerator } from "../../../shared/classes/CodeGenerator/JavascriptGenerator";
+import { TypescriptGenerator } from "../../../shared/classes/CodeGenerator/TypescriptGenerator";
 
 export class CreateDataFile {
   private data: ReturnDataset[] = [];
@@ -27,14 +29,36 @@ export class CreateDataFile {
 
     if (fileType === FILE_TYPE.JSON) return await this.generateJSONFile();
     else if (fileType === FILE_TYPE.CSV) return await this.generateCSV();
-    else if (fileType === FILE_TYPE.JAVASCRIPT)
+    else if (
+      fileType === FILE_TYPE.JAVASCRIPT ||
+      fileType === FILE_TYPE.TYPESCRIPT
+    )
       return await this.generateCodeFile();
     else throw new InvalidFileTypeError();
   }
 
   private async generateCodeFile(): Promise<string> {
-    const generator = new CodeGenerator(this.data, this.config.file);
-    const fileURL = await generator.generateFile();
+    let generator: Generator;
+
+    switch (this.config.file.fileType) {
+      case FILE_TYPE.JAVASCRIPT:
+        generator = new JavascriptGenerator(
+          this.data,
+          this.config.file.arguments
+        );
+      case FILE_TYPE.TYPESCRIPT:
+        generator = new TypescriptGenerator(
+          this.data,
+          this.config.file.arguments
+        );
+      default:
+        generator = new JavascriptGenerator(
+          this.data,
+          this.config.file.arguments
+        );
+    }
+
+    const fileURL = await generator.generateCode();
     return fileURL;
   }
 
