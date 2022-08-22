@@ -32,7 +32,13 @@ export const FinanceField = (): TypeOptionSchema[] => {
       exampleValue: faker.finance.account(),
       getValue: (args) => faker.finance.account(args.length),
       name: "Account",
-      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
+      arguments: [
+        {
+          argument: "length",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Longitud máxima que puede tener la cuenta",
+        },
+      ],
     },
     {
       exampleValue: faker.finance.accountName,

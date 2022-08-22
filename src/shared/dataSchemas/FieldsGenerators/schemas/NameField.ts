@@ -7,6 +7,7 @@ const NAME_FIELD_ARGUMENTS = [
     argument: "gender",
     inputType: ARGUMENT_TYPE.SELECT,
     selectValues: ["Male", "Female"],
+    description: "Género que tendra el nombre a generar",
   },
 ];
 

@@ -21,12 +21,27 @@ export const InternetField = (): TypeOptionSchema[] => {
         ),
       name: "Email",
       arguments: [
-        { argument: "firstName", inputType: ARGUMENT_TYPE.TEXT },
-        { argument: "lastName", inputType: ARGUMENT_TYPE.TEXT },
-        { argument: "provider", inputType: ARGUMENT_TYPE.TEXT },
+        {
+          argument: "firstName",
+          inputType: ARGUMENT_TYPE.TEXT,
+          description:
+            "Primer nombre del dueño del email para poder ser introducido en el email resultante",
+        },
+        {
+          argument: "lastName",
+          inputType: ARGUMENT_TYPE.TEXT,
+          description:
+            "Apellido del dueño del email para poder ser introducido en el email resultante",
+        },
+        {
+          argument: "provider",
+          inputType: ARGUMENT_TYPE.TEXT,
+          description: "El provedor del emial. Ejemplo: gmail, hotmail, etc.",
+        },
         {
           argument: "allowSpecialCharacters",
           inputType: ARGUMENT_TYPE.BOOLEAN,
+          description: "Indica si se pueden utilizar carácteres especiales",
         },
       ],
     },
@@ -34,7 +49,13 @@ export const InternetField = (): TypeOptionSchema[] => {
       exampleValue: faker.internet.password(),
       getValue: (args) => faker.internet.password(args.length),
       name: "Password",
-      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
+      arguments: [
+        {
+          argument: "length",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Longitud máxima de la contraseña",
+        },
+      ],
     },
     {
       exampleValue: faker.internet.url(),
@@ -48,8 +69,18 @@ export const InternetField = (): TypeOptionSchema[] => {
         faker.internet.userName(args.firstName, args.lastName),
       name: "User Name",
       arguments: [
-        { argument: "firstName", inputType: ARGUMENT_TYPE.TEXT },
-        { argument: "lastName", inputType: ARGUMENT_TYPE.TEXT },
+        {
+          argument: "firstName",
+          inputType: ARGUMENT_TYPE.TEXT,
+          description:
+            "Primer nombre de la persona para ser utilizado en su nombre de usuario",
+        },
+        {
+          argument: "lastName",
+          inputType: ARGUMENT_TYPE.TEXT,
+          description:
+            "Apellido de la persona para ser utilizado en su nombre de usuario",
+        },
       ],
     },
     {

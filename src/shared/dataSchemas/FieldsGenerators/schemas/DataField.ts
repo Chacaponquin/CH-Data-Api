@@ -11,8 +11,17 @@ export const DateField = (): TypeOptionSchema[] => {
       },
       name: "Date Soon",
       arguments: [
-        { argument: "days", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
+        {
+          argument: "days",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Rango de días en los que se encontrará la fecha",
+        },
+        {
+          argument: "refDate",
+          inputType: ARGUMENT_TYPE.DATE,
+          description:
+            "Fecha de referencia para devolver una fecha cercana a la seleccionada",
+        },
       ],
     },
     {
@@ -20,8 +29,17 @@ export const DateField = (): TypeOptionSchema[] => {
       getValue: (args) => faker.date.past(args.years, args.refDate),
       name: "Date Past",
       arguments: [
-        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
-        { argument: "years", inputType: ARGUMENT_TYPE.NUMBER },
+        {
+          argument: "refDate",
+          inputType: ARGUMENT_TYPE.DATE,
+          description:
+            "Fecha de referencia para devolver una fecha anterior a la seleccionada",
+        },
+        {
+          argument: "years",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Rango de años para seleccionar una fecha",
+        },
       ],
     },
     {
@@ -32,8 +50,14 @@ export const DateField = (): TypeOptionSchema[] => {
         {
           argument: "years",
           inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Rango de años para devolver una fecha del futuro",
         },
-        { argument: "refDate", inputType: ARGUMENT_TYPE.DATE },
+        {
+          argument: "refDate",
+          inputType: ARGUMENT_TYPE.DATE,
+          description:
+            "Fecha de referencia para devolver una fecha futura a la seleccionada",
+        },
       ],
     },
     {
@@ -57,8 +81,16 @@ export const DateField = (): TypeOptionSchema[] => {
         }),
       name: "BirthDate",
       arguments: [
-        { argument: "min", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
+        {
+          argument: "min",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Años minimos que debe tener la persona",
+        },
+        {
+          argument: "max",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Años máximos que debe tener la persona ",
+        },
       ],
     },
     {
@@ -73,8 +105,16 @@ export const DateField = (): TypeOptionSchema[] => {
         ),
       name: "Date Between",
       arguments: [
-        { argument: "from", inputType: ARGUMENT_TYPE.DATE },
-        { argument: "to", inputType: ARGUMENT_TYPE.DATE },
+        {
+          argument: "from",
+          inputType: ARGUMENT_TYPE.DATE,
+          description: "Fecha de inicio del rango",
+        },
+        {
+          argument: "to",
+          inputType: ARGUMENT_TYPE.DATE,
+          description: "Fecha final del rango",
+        },
       ],
     },
   ];

@@ -7,29 +7,19 @@ import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
 export const DataTypeField = (): TypeOptionSchema[] => {
   return [
     {
-      name: "Number",
-      getValue: (args) => {
-        if (args.min > args.max)
-          throw new InvalidArgumentError(
-            "El parametro min no puede ser mayor al max"
-          );
-
-        return faker.datatype.number({ min: args.min, max: args.max });
-      },
-      exampleValue: faker.datatype.number(),
+      exampleValue: faker.datatype.array(),
+      getValue: (args) => faker.datatype.array(Number(args.length)),
+      name: "Array (Random values)",
       arguments: [
-        { argument: "min", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
+        {
+          argument: "length",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Tamaño máximo que pueda tener el arreglo",
+        },
       ],
     },
     {
-      exampleValue: faker.datatype.array(),
-      getValue: (args) => faker.datatype.array(args.length),
-      name: "Array (Random values)",
-      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
-    },
-    {
-      exampleValue: faker.datatype.boolean,
+      exampleValue: faker.datatype.boolean(),
       getValue: () => randomChoiceList([true, false]),
       name: "Boolean",
       arguments: [],
@@ -37,65 +27,99 @@ export const DataTypeField = (): TypeOptionSchema[] => {
     {
       exampleValue: faker.datatype.number(),
       getValue: (args) => {
-        if (args.min > args.max)
+        const min = Number(args.min);
+        const max = Number(args.max);
+        const precision = Number(args.precision);
+
+        if (min > max)
           throw new InvalidArgumentError(
             "El parametro min no puede ser mayor al max"
           );
 
-        if (args.precision < 0)
+        if (precision < 0)
           throw new InvalidArgumentError(
             "La precicsion no puede ser un numero negativo"
           );
 
         return faker.datatype.number({
-          max: args.max,
-          min: args.min,
-          precision: args.precision,
+          max,
+          min,
+          precision,
         });
       },
-      name: "Number (Int)",
+      name: "Number",
       arguments: [
         {
           argument: "min",
           inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Valor mínimo a obtener. Por defecto tiene valor de 0",
         },
-        { argument: "max", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
+        {
+          argument: "max",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Valor máximo a obtener",
+        },
+        {
+          argument: "precision",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description:
+            "Presición del número resultante. Ejemplo: 0,01 --> 36.94 ",
+        },
       ],
     },
     {
       exampleValue: faker.datatype.hexadecimal,
-      getValue: (args) => faker.datatype.hexadecimal(args.length),
+      getValue: (args) => faker.datatype.hexadecimal(Number(args.length)),
       name: "Hexadecimal",
-      arguments: [{ argument: "length", inputType: ARGUMENT_TYPE.NUMBER }],
+      arguments: [
+        {
+          argument: "length",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Tamaño máximo del código hexadecimal",
+        },
+      ],
     },
     {
       exampleValue: faker.datatype.float(),
       getValue: (args) => {
-        if (args.min > args.max)
+        const min = Number(args.min);
+        const max = Number(args.max);
+        const precision = Number(args.precision);
+
+        if (min > max)
           throw new InvalidArgumentError(
             "El parametro min no puede ser mayor al max"
           );
 
-        if (args.precision < 0)
+        if (precision < 0)
           throw new InvalidArgumentError(
             "La precicsion no puede ser un numero negativo"
           );
 
-        return faker.datatype.number({
-          max: args.max,
-          min: args.min,
-          precision: args.precision,
+        return faker.datatype.float({
+          max,
+          min,
+          precision,
         });
       },
-      name: "Number (Float)",
+      name: "Float",
       arguments: [
         {
           argument: "min",
           inputType: ARGUMENT_TYPE.FLOAT,
+          description: "Valor mínimo a obtener. Por defecto tiene valor de 0",
         },
-        { argument: "max", inputType: ARGUMENT_TYPE.FLOAT },
-        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
+        {
+          argument: "max",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description: "Valor máximo a obtener",
+        },
+        {
+          argument: "precision",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description:
+            " Presición del número resultante. Ejemplo: 0,01 --> 36.94 ",
+        },
       ],
     },
     {
@@ -106,13 +130,16 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       ],
       getValue: (args) => {
         const x_size =
-          args.x_size || faker.datatype.number({ min: 1, max: 10 });
+          Number(args.x_size) || faker.datatype.number({ min: 1, max: 10 });
         const y_size =
-          args.y_size || faker.datatype.number({ min: 1, max: 10 });
-        const min = args.min || faker.datatype.number({ min: 1, max: 10 });
-        const max = args.max || faker.datatype.number({ min: min, max: 10 });
+          Number(args.y_size) || faker.datatype.number({ min: 1, max: 10 });
+        const min =
+          Number(args.min) ||
+          faker.datatype.number({ min: 1, max: args.max || 10 });
+        const max =
+          Number(args.max) || faker.datatype.number({ min: min, max: 100 });
         const precision =
-          args.precision ||
+          Number(args.precision) ||
           faker.datatype.number({ min: 0, max: 1, precision: 0.1 });
 
         if (args.x_size <= 0 || args.y_size <= 0)
@@ -157,15 +184,36 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       },
       name: "Matriz",
       arguments: [
-        { argument: "x_size", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "y_size", inputType: ARGUMENT_TYPE.NUMBER },
-        { argument: "precision", inputType: ARGUMENT_TYPE.FLOAT },
-        { argument: "min", inputType: ARGUMENT_TYPE.FLOAT },
-        { argument: "max", inputType: ARGUMENT_TYPE.FLOAT },
+        {
+          argument: "x_size",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Cantidad de columnas de la matriz",
+        },
+        {
+          argument: "y_size",
+          inputType: ARGUMENT_TYPE.NUMBER,
+          description: "Cantidad de filas de la matriz",
+        },
+        {
+          argument: "precision",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description: "",
+        },
+        {
+          argument: "min",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description: "Valor mínimo que pueden tener los números de la matriz",
+        },
+        {
+          argument: "max",
+          inputType: ARGUMENT_TYPE.FLOAT,
+          description: "Valor máximo que pueden tener los números de la matriz",
+        },
         {
           argument: "dataType",
           inputType: ARGUMENT_TYPE.SELECT,
           selectValues: ["Int", "Float"],
+          description: "Tipo de dato que tendrán los valores de la matriz",
         },
       ],
     },

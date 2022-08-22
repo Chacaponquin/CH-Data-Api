@@ -45,6 +45,7 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
       } else res.status(404).end();
     } else res.status(404).end();
   } catch (error: any) {
+    console.log(error);
     if (error instanceof InvalidArgumentError) {
       res.status(500).json({ error: error.message }).end();
     } else res.status(500).json({ error: null }).end();

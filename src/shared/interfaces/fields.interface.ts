@@ -5,13 +5,17 @@ export interface InitialOptionSchema {
   fields: TypeOptionSchema[];
 }
 
+export interface FieldArgumentSchema extends ArgumentSchema {
+  description: string;
+}
+
 export interface ApiParentData extends InitialOptionSchema {
   fields: ApiFieldSchema[];
 }
 
 export interface TypeOptionSchema {
   name: string;
-  arguments: ArgumentSchema[];
+  arguments: FieldArgumentSchema[];
   exampleValue: any;
   getValue(args: any): any;
 }
