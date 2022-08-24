@@ -8,7 +8,8 @@ import cors from "cors";
 import ROUTES from "./routes";
 import timedOut from "connect-timeout";
 import { Server } from "socket.io";
-
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GithubStrategy } from "passport-github2";
 import { createContextUser } from "./shared/tasks/createContextUser";
 import { SocketTasks } from "./socket/SocketTasks";
 
@@ -48,6 +49,37 @@ app.use("/api", ROUTES.API_ROUTES);
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      scope: ["email", "profile"],
+      callbackURL: "/auth/googleAuth",
+    },
+    function (accessToken, refreshToken, profile, callback) {
+      callback(null, profile._json);
+    }
+  )
+);
+
+passport.use(
+  new GithubStrategy(
+    {
+      callbackURL: "/auth/githubAuth",
+      clientID: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
+    function (accessToken: any, refreshToken: any, profile: any, cb: any) {
+      cb(null, profile._json);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
 const httpServer = http.createServer(app);
 

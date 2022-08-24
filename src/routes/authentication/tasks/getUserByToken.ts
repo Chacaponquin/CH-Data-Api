@@ -10,7 +10,7 @@ export const getUserByToken = async (req: Request, res: Response) => {
       const user = jwt.verify(token, process.env.SECRET_WORD as string) as any;
 
       if (user) {
-        const userFound = await User.findById(user.id).select("username");
+        const userFound = await User.findById(user.id).select("username image");
 
         if (userFound) {
           res.json({ user: userFound }).end();

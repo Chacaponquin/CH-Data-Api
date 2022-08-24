@@ -3,6 +3,7 @@ import User from "../../../db/schemas/User";
 import { WrongUser } from "../errors/WrongUser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
 
 export const signInUser = async (req: Request, res: Response) => {
   try {
@@ -11,18 +12,20 @@ export const signInUser = async (req: Request, res: Response) => {
     const userFound = await User.findOne({ email: email });
 
     if (userFound) {
-      const correctPassword = await bcrypt.compare(
-        password,
-        userFound.password
-      );
-
-      if (correctPassword) {
-        const token = jwt.sign(
-          { id: userFound._id },
-          process.env.SECRET_WORD as string
+      if (userFound.password && LOGIN_METHODS.EMAIL === userFound.methodLogin) {
+        const correctPassword = await bcrypt.compare(
+          password,
+          userFound.password as string
         );
 
-        res.json({ token }).end();
+        if (correctPassword) {
+          const token = jwt.sign(
+            { id: userFound._id },
+            process.env.SECRET_WORD as string
+          );
+
+          res.json({ token }).end();
+        } else throw new WrongUser();
       } else throw new WrongUser();
     } else throw new WrongUser();
   } catch (error) {

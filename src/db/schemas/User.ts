@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { LOGIN_METHODS } from "../../shared/helpers/constants/LoginMethods";
 import {
   SUPER_USER_LIMITS,
   USER_LIMITS,
@@ -6,17 +7,20 @@ import {
 
 interface UserSchema {
   username: string;
-  email: string;
-  password: string;
+  email: string | null;
+  password: string | null;
   isSuperUser: boolean;
   datasetsSchemas: any[];
+  image: string | null;
+  methodLogin: LOGIN_METHODS;
 }
 
 const userSchema = new mongoose.Schema<UserSchema>(
   {
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, unique: true },
+    email: { type: String, default: null },
+    password: { type: String, default: null },
     username: { type: String, required: true, maxlength: 50 },
+    image: { type: String, default: null },
     isSuperUser: { type: Boolean, default: false },
     datasetsSchemas: {
       type: [
@@ -24,6 +28,7 @@ const userSchema = new mongoose.Schema<UserSchema>(
       ],
       default: [],
     },
+    methodLogin: { type: String, enum: LOGIN_METHODS, required: true },
   },
   { timestamps: { createdAt: true } }
 );

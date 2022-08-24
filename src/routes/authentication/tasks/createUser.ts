@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import User from "../../../db/schemas/User";
 import jwt from "jsonwebtoken";
 import { AuthInput } from "../interface/auth.interface";
+import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
 
 export const createUserRoute = async (req: Request, res: Response) => {
   try {
@@ -10,7 +11,12 @@ export const createUserRoute = async (req: Request, res: Response) => {
 
     const newPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ password: newPassword, username, email });
+    const newUser = new User({
+      password: newPassword,
+      username,
+      email,
+      methodLogin: LOGIN_METHODS.EMAIL,
+    });
 
     await newUser.save();
 
