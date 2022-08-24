@@ -72,6 +72,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
     function (accessToken: any, refreshToken: any, profile: any, cb: any) {
+      console.log(profile._json);
       cb(null, profile._json);
     }
   )
