@@ -27,8 +27,6 @@ export const githubAuthRoute = async (req: Request, res: Response) => {
       );
     }
 
-    console.log(token);
-
     res
       .status(200)
       .cookie("jwt", token)

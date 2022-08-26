@@ -28,8 +28,8 @@ export class TypescriptGenerator extends Generator {
       const nameCapitalizaed = FormatterData.capitalizeText(dat.name);
 
       if (this.args.generateInterfaces) {
-        code = `const ${nameCapitalizaed} :  I${nameCapitalizaed}[] = ${javascriptCode}\n`;
-      } else code = `const ${nameCapitalizaed} = ${javascriptCode}`;
+        code = `const ${nameCapitalizaed} :  I${dat.name}[] = ${javascriptCode};\n`;
+      } else code = `const ${nameCapitalizaed} = ${javascriptCode};`;
 
       allCode += code;
     }

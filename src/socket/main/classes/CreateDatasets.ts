@@ -19,6 +19,7 @@ import {
 } from "../interfaces/datasets.interface";
 import { FormatterData } from "../../../shared/classes/FormatterData";
 import { ARGUMENT_TYPE } from "../../../shared/interfaces/fieldsTypes.enum";
+import { Types } from "mongoose";
 
 export class CreateDatasets {
   private datasets: Dataset[] = [];
@@ -207,7 +208,7 @@ export class CreateDatasets {
     }
   }
 
-  public async saveDataSchema(userID: string): Promise<void> {
+  public async saveDataSchema(userID: Types.ObjectId): Promise<void> {
     for (const dat of this.datasets) {
       const newSchema = new DatasetSchema({
         name: dat.name,

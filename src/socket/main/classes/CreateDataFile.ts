@@ -46,16 +46,19 @@ export class CreateDataFile {
           this.data,
           this.config.file.arguments
         );
+        break;
       case FILE_TYPE.TYPESCRIPT:
         generator = new TypescriptGenerator(
           this.data,
           this.config.file.arguments
         );
+        break;
       default:
         generator = new JavascriptGenerator(
           this.data,
           this.config.file.arguments
         );
+        break;
     }
 
     const fileURL = await generator.generateCode();

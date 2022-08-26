@@ -3,12 +3,15 @@ import { InputConfigSchema } from "../../../shared/interfaces/config.interface";
 import { CreateDataFile } from "../classes/CreateDataFile";
 import { CreateDatasets } from "../classes/CreateDatasets";
 import { Socket } from "socket.io";
+import { JwtActions } from "../../../shared/classes/JwtActions";
 
 export const createDatasets = async (
   socket: Socket,
   args: any = {}
 ): Promise<void> => {
-  const currentUser = args.user as any;
+  const { token } = socket.handshake.auth as any;
+
+  const currentUser = await JwtActions.verifyToken(token);
 
   try {
     const datasets: Dataset[] = args.datasets as Dataset[];
