@@ -12,14 +12,19 @@ import { InvalidParentFieldError } from "../errors/InvalidParentFieldError";
 import { InvalidTypeError } from "../errors/InvalidTypeError";
 import { NotFoundReferenceError } from "../errors/NotFoundReferenceError";
 import {
+  CODE_TYPES,
+  CustomDataType,
   Dataset,
   DatasetField,
   DATA_TYPES,
+  RefDataType,
   ReturnDataset,
+  SingleValueDataType,
 } from "../interfaces/datasets.interface";
 import { FormatterData } from "../../../shared/classes/FormatterData";
 import { ARGUMENT_TYPE } from "../../../shared/interfaces/fieldsTypes.enum";
 import { Types } from "mongoose";
+import { CreateCustomValue } from "./CreateCustomValue";
 
 export class CreateDatasets {
   private datasets: Dataset[] = [];
@@ -61,7 +66,8 @@ export class CreateDatasets {
       });
     }
 
-    this.generateRefFields();
+    this.generateComplicatedValues();
+    this.generateCustomValues();
 
     return this.returnDatasets;
   }
@@ -80,6 +86,10 @@ export class CreateDatasets {
           value = field;
           break;
         }
+        case DATA_TYPES.CUSTOM: {
+          value = field;
+          break;
+        }
         default:
           value = undefined;
           break;
@@ -93,30 +103,62 @@ export class CreateDatasets {
     return fieldsData;
   }
 
+  private generateComplicatedValues(): void {
+    for (const dat of this.returnDatasets) {
+      {
+        for (let doc of dat.documents) {
+          for (let fieldContent of Object.values(doc) as any[]) {
+            if (
+              fieldContent &&
+              fieldContent.dataType &&
+              fieldContent.dataType.type
+            ) {
+              if (
+                fieldContent.dataType.ref &&
+                fieldContent.dataType.fieldRef &&
+                fieldContent.dataType.type === DATA_TYPES.REF
+              ) {
+                doc[fieldContent.name] = this.generateRefFields(
+                  fieldContent as DatasetField
+                );
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   private async generateValue(field: DatasetField): Promise<any> {
     const fields = await new DataFields().getFields();
 
-    const parentFound: InitialOptionSchema | undefined = fields.find(
-      (el) => el.parent === field.type.parent
-    );
+    const fieldDatatype = field.dataType as SingleValueDataType;
+
+    const parentFound: InitialOptionSchema | undefined = fields.find((el) => {
+      return el.parent === fieldDatatype.fieldType.parent;
+    });
     if (parentFound) {
-      const typeFound = parentFound.fields.find(
-        (el) => el.name === field.type.type
-      );
+      const typeFound = parentFound.fields.find((el) => {
+        return el.name === fieldDatatype.fieldType.type;
+      });
 
       if (typeFound) {
         let value;
 
-        this.validateArguments(field.args, typeFound.arguments);
+        this.validateArguments(
+          fieldDatatype.fieldType.args,
+          typeFound.arguments
+        );
 
         value = await this.generateValueByConfig(
           field,
-          async () => await typeFound.getValue(field.args || {})
+          async () =>
+            await typeFound.getValue(fieldDatatype.fieldType.args || {})
         );
 
         return value;
-      } else throw new InvalidTypeError(field.type.type);
-    } else throw new InvalidParentFieldError(field.type.parent);
+      } else throw new InvalidTypeError(fieldDatatype.fieldType.type);
+    } else throw new InvalidParentFieldError(fieldDatatype.fieldType.parent);
   }
 
   private validateArguments(args: any, elementArgs: ArgumentSchema[]): void {
@@ -169,43 +211,42 @@ export class CreateDatasets {
     return returnValue;
   }
 
-  private generateRefFields(): void {
+  private generateCustomValues(): any {
     for (const dat of this.returnDatasets) {
       for (let doc of dat.documents) {
-        for (let fieldContent of Object.values(doc) as any[]) {
-          if (
-            fieldContent &&
-            fieldContent.dataType &&
-            fieldContent.dataType.type &&
-            fieldContent.dataType.ref &&
-            fieldContent.dataType.fieldRef &&
-            fieldContent.dataType.type === DATA_TYPES.REF
-          ) {
-            const found = this.returnDatasets.find(
-              (el) => el.name === fieldContent.dataType.ref
-            );
-
-            if (found) {
-              const allDataToRef = found.documents.map((el) => {
-                for (const key of Object.keys(el)) {
-                  if (key === fieldContent.dataType.fieldRef) {
-                    if (Array.isArray(el[key]))
-                      throw new Error(
-                        "No se puede referenciar a un campo array"
-                      );
-                    return el[key];
-                  }
-                }
-              });
-
-              const valueToRef = randomChoiceList(allDataToRef);
-
-              doc[fieldContent.name] = valueToRef;
-            } else throw new NotFoundReferenceError();
-          }
+        if (
+          doc.dataType &&
+          doc.dataType.code &&
+          doc.dataType.type === DATA_TYPES.CUSTOM
+        ) {
+          doc = new CreateCustomValue(doc, doc.dataType as CustomDataType);
         }
       }
     }
+  }
+
+  private generateRefFields(fieldContent: DatasetField): any {
+    const fieldDataType = fieldContent.dataType as RefDataType;
+
+    const found = this.returnDatasets.find(
+      (el) => el.name === fieldDataType.ref
+    );
+
+    if (found) {
+      const allDataToRef = found.documents.map((el) => {
+        for (const key of Object.keys(el)) {
+          if (key === fieldDataType.fieldRef) {
+            if (Array.isArray(el[key]))
+              throw new Error("No se puede referenciar a un campo array");
+            return el[key];
+          }
+        }
+      });
+
+      const valueToRef = randomChoiceList(allDataToRef);
+
+      return valueToRef;
+    } else throw new NotFoundReferenceError();
   }
 
   public async saveDataSchema(userID: Types.ObjectId): Promise<void> {

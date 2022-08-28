@@ -1,14 +1,14 @@
-import { Generator } from "./Generator";
+import { CodeGenerator } from "./CodeGenerator";
 import fs from "fs";
 import { FormatterData } from "../FormatterData";
 import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
 
-export class JavascriptGenerator extends Generator {
+export class JavascriptGenerator extends CodeGenerator {
   constructor(datasets: ReturnDataset[], args: any) {
-    super(datasets, args);
+    super(datasets, args, "js");
   }
 
-  public async generateCode(): Promise<string> {
+  protected async generateCodeFile(): Promise<string> {
     let returnData = ``;
 
     for (const dat of this.data) {
@@ -17,11 +17,15 @@ export class JavascriptGenerator extends Generator {
       )} = ${this.generateDatasetArray(dat.documents)};\n`;
     }
 
-    const fieldName = `data${Date.now()}.js`;
+    const fileName = this.generateFileName();
 
-    await fs.promises.writeFile(`./public/${fieldName}`, returnData, "utf8");
+    await fs.promises.writeFile(
+      this.generatePublicRoute(fileName),
+      returnData,
+      "utf8"
+    );
 
-    return `util/downloadData/${fieldName}`;
+    return fileName;
   }
 
   public generateDatasetArray(datasetFields: any[]): string {

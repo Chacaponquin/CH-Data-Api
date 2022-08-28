@@ -1,15 +1,15 @@
-import { Generator } from "./Generator";
+import { CodeGenerator } from "./CodeGenerator";
 import { JavascriptGenerator } from "./JavascriptGenerator";
 import fs from "fs";
 import { FormatterData } from "../FormatterData";
 import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
 
-export class TypescriptGenerator extends Generator {
+export class TypescriptGenerator extends CodeGenerator {
   constructor(datasets: ReturnDataset[], args: any) {
-    super(datasets, args);
+    super(datasets, args, "ts");
   }
 
-  public async generateCode(): Promise<string> {
+  protected async generateCodeFile(): Promise<string> {
     let allCode: string = ``;
 
     if (this.args.generateInterfaces) {
@@ -34,11 +34,15 @@ export class TypescriptGenerator extends Generator {
       allCode += code;
     }
 
-    const fieldName = `data${Date.now()}.ts`;
+    const fileName = this.generateFileName();
 
-    await fs.promises.writeFile(`./public/${fieldName}`, allCode, "utf8");
+    await fs.promises.writeFile(
+      this.generatePublicRoute(fileName),
+      allCode,
+      "utf8"
+    );
 
-    return `util/downloadData/${fieldName}`;
+    return fileName;
   }
 
   private generateDatasetInterface(dat: ReturnDataset): string {

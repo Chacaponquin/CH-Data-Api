@@ -12,10 +12,8 @@ export interface Dataset {
 
 export interface DatasetField {
   name: string;
-  type: TypeSchema;
   id: number;
-  dataType: MixedDataType | RefDataType | ArrayDataType | SingleValueDataType;
-  args: any;
+  dataType: MixedDataType | RefDataType | SingleValueDataType | CustomDataType;
   isPosibleNull: boolean;
   isArray: {
     min: number;
@@ -26,6 +24,7 @@ export interface DatasetField {
 export interface TypeSchema {
   parent: string;
   type: string;
+  args: any;
 }
 
 interface DataTypeSchema {
@@ -39,14 +38,23 @@ export interface RefDataType extends DataTypeSchema {
   fieldRef: string;
 }
 
-interface SingleValueDataType extends DataTypeSchema {}
+export interface SingleValueDataType extends DataTypeSchema {
+  fieldType: TypeSchema;
+}
 
-interface ArrayDataType extends DataTypeSchema {
-  limit: number;
+export interface CustomDataType extends DataTypeSchema {
+  code: string;
+  codeType: CODE_TYPES;
 }
 
 export enum DATA_TYPES {
   SINGLE_VALUE = "SINGLE_VALUE",
   MIXED = "MIXED",
   REF = "REF",
+  CUSTOM = "CUSTOM",
+}
+
+export enum CODE_TYPES {
+  JAVASCRIPT = "JAVASCRIPT",
+  PYTHON = "PYTHON",
 }

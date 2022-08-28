@@ -1,6 +1,7 @@
 import {
   ReturnDataset,
   DatasetField,
+  SingleValueDataType,
 } from "../../socket/main/interfaces/datasets.interface";
 
 export const FormatterData = {
@@ -79,24 +80,29 @@ export const FormatterData = {
     for (const field of fieldsData) {
       const { name, id, ...rest } = field;
 
-      let argsObj = {};
-      if (field.args && field.args.length) {
-        for (const arg of field.args) {
-          argsObj = { ...argsObj, [arg.field]: arg.value };
-        }
-      }
+      const fieldDatatype = field.dataType as SingleValueDataType;
 
       object = {
         ...object,
         [name]: {
-          type: field.type.parent + "/" + field.type.type,
+          type:
+            fieldDatatype.fieldType.parent + "/" + fieldDatatype.fieldType.type,
           isArray: field.isArray,
-          args: argsObj,
+          args: fieldDatatype.fieldType.args,
         },
       };
     }
 
     return object;
   },
-  transformReturnData(data: ReturnDataset[]): any {},
+
+  transformReturnDataToObject(data: ReturnDataset[]): any {
+    let returnObject = {};
+
+    for (const dat of data) {
+      returnObject = { ...returnObject, [dat.name]: dat.documents };
+    }
+
+    return returnObject;
+  },
 };
