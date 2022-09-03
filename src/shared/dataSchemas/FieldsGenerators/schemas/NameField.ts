@@ -17,17 +17,18 @@ export const NameField = (): TypeOptionSchema[] => {
       name: "Last Name",
       arguments: NAME_FIELD_ARGUMENTS,
       exampleValue: faker.name.lastName(),
-      getValue: ({ gender }: any) => faker.name.lastName(gender.toLowerCase()),
+      getValue: ({ gender }: any) =>
+        faker.name.lastName(gender ? gender.toLowerCase() : undefined),
     },
     {
       name: "Full Name",
       arguments: NAME_FIELD_ARGUMENTS,
       getValue: ({ gender }: any) =>
-        faker.name.firstName(gender.toLowerCase()) +
+        faker.name.firstName(gender ? gender.toLowerCase() : undefined) +
         " " +
-        faker.name.middleName(gender.toLowerCase()) +
+        faker.name.middleName(gender ? gender.toLowerCase() : undefined) +
         " " +
-        faker.name.lastName(gender.toLowerCase()),
+        faker.name.lastName(gender ? gender.toLowerCase() : undefined),
       exampleValue:
         faker.name.firstName() +
         " " +
@@ -38,20 +39,22 @@ export const NameField = (): TypeOptionSchema[] => {
     {
       name: "First Name",
       arguments: NAME_FIELD_ARGUMENTS,
-      getValue: ({ gender }: any) => faker.name.firstName(gender.toLowerCase()),
+      getValue: ({ gender }: any) =>
+        faker.name.firstName(gender ? gender.toLowerCase() : undefined),
       exampleValue: faker.name.firstName(),
     },
     {
       name: "Middle Name",
       arguments: NAME_FIELD_ARGUMENTS,
       getValue: ({ gender }: any) =>
-        faker.name.middleName(gender.toLowerCase()),
+        faker.name.middleName(gender ? gender.toLowerCase() : undefined),
       exampleValue: faker.name.middleName(),
     },
     {
       name: "Prefix",
       arguments: NAME_FIELD_ARGUMENTS,
-      getValue: ({ gender }: any) => faker.name.prefix(gender.toLowerCase()),
+      getValue: ({ gender }: any) =>
+        faker.name.prefix(gender ? gender.toLowerCase() : undefined),
       exampleValue: faker.name.prefix(),
     },
     {

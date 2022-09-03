@@ -1,3 +1,4 @@
+import { randomChoiceList } from "../../../shared/helpers/randomChoice";
 import { CreateCustomFieldError } from "../errors/CreateCustomFieldError";
 import { CustomCodeInvalidError } from "../errors/CustomCodeInvalidError";
 import { CODE_TYPES, CustomDataType } from "../interfaces/datasets.interface";
@@ -25,6 +26,7 @@ export class CreateCustomValue {
           const func = new Function(contentCode);
           const value = func.apply({
             ...this.doc,
+            oneOfArray: randomChoiceList,
           });
           console.log(value);
 
