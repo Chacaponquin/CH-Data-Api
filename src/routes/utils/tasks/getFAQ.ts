@@ -1,5 +1,10 @@
 import { Response, Request } from "express";
-import { QuestionSchema } from "../../../db/schemas/Question";
+
+interface QuestionSchema {
+  question: string;
+  answer: string;
+  userEmail: string;
+}
 
 export const getFAQ = (req: Request, res: Response) => {
   const initialFAQ: QuestionSchema[] = [
