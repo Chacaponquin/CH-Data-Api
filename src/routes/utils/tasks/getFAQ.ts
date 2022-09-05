@@ -31,16 +31,6 @@ export const getFAQ = (req: Request, res: Response) => {
       answer: "",
       userEmail: "",
     },
-    {
-      question: "",
-      answer: "",
-      userEmail: "",
-    },
-    {
-      question: "",
-      answer: "",
-      userEmail: "",
-    },
   ];
 
   res.json({ faq: initialFAQ }).end();
