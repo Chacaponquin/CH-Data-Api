@@ -13,7 +13,7 @@ export const AddressField = (): TypeOptionSchema[] => {
     {
       name: "Time Zone",
       exampleValue: faker.address.timeZone(),
-      getValue: () => faker.address.timeZone,
+      getValue: () => faker.address.timeZone(),
       arguments: [],
     },
     {

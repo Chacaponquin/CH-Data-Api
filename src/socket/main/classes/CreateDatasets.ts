@@ -190,8 +190,8 @@ export class CreateDatasets {
       let newData = [];
 
       const limit = faker.datatype.number({
-        min: isArray.min ? isArray.min : undefined,
-        max: isArray.max ? isArray.max : undefined,
+        min: isArray.min || undefined,
+        max: isArray.max || undefined,
       });
 
       for (let i = 0; i < limit; i++) {

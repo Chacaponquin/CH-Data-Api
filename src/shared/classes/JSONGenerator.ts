@@ -4,7 +4,10 @@ import { Generator } from "./Generator";
 import fs from "fs";
 
 export class JSONGenerator extends Generator {
-  constructor(data: ReturnDataset[], args: any) {
+  constructor(
+    data: ReturnDataset[],
+    args: { [path: string]: string | boolean }
+  ) {
     super(data, "json", args);
   }
 

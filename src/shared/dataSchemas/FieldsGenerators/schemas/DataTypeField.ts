@@ -8,7 +8,11 @@ export const DataTypeField = (): TypeOptionSchema[] => {
   return [
     {
       exampleValue: faker.datatype.array(),
-      getValue: (args) => faker.datatype.array(Number(args.length)),
+      getValue: (args) => {
+        return faker.datatype
+          .array(Number(args.length))
+          .map((el) => el.toString());
+      },
       name: "Array (Random values)",
       arguments: [
         {

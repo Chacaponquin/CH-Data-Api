@@ -6,8 +6,8 @@ export const FinanceField = (): TypeOptionSchema[] => {
   return [
     {
       name: "Pin",
-      getValue: () => faker.finance.pin,
-      exampleValue: faker.finance.pin,
+      getValue: () => faker.finance.pin(),
+      exampleValue: faker.finance.pin(),
       arguments: [],
     },
     {

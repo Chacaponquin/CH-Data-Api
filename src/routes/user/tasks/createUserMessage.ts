@@ -13,6 +13,7 @@ export const createUserMessage = async (req: Request, res: Response) => {
     await newMessage.save();
     res.status(200).end();
   } catch (error) {
+    console.log(error);
     res.status(500).end();
   }
 };

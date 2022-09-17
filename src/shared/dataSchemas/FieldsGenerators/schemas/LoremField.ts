@@ -8,14 +8,14 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Lines",
       exampleValue: faker.lorem.lines(),
-      getValue: ({ count }) => {
-        if (count < 1) {
+      getValue: (args) => {
+        if (args.count < 1) {
           throw new InvalidArgumentError(
             "La cantidad de lineas no puede ser menor a 1"
           );
         }
 
-        return faker.lorem.lines(count);
+        return faker.lorem.lines(args.count);
       },
       arguments: [
         {
@@ -83,8 +83,42 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Text",
       exampleValue: faker.lorem.text(),
-      getValue: () => faker.lorem.text(),
-      arguments: [],
+      getValue: (args) => {
+        let text = faker.lorem.text();
+
+        const charMin = args.charactersMin || 10;
+        const charMax = args.charactersMax || 300;
+
+        if (charMax < 1 || charMin < 1) {
+          throw new InvalidArgumentError(
+            "Ni la cantidad maxima o minima puede ser menor a 1"
+          );
+        } else if (charMax < charMin)
+          throw new InvalidArgumentError(
+            "La cantidad maxima de caracteres no puede ser inferior a la cantidad minima de caracteres"
+          );
+
+        return text.slice(
+          0,
+          faker.datatype.number({
+            precision: 1,
+            min: charMin,
+            max: charMax,
+          })
+        );
+      },
+      arguments: [
+        {
+          argument: "charactersMax",
+          description: "Cantidad de caracteres que no puede superar el texto",
+          inputType: ARGUMENT_TYPE.NUMBER,
+        },
+        {
+          argument: "charactersMin",
+          description: "Cantidad mínima de caracteres que debe tener el texto",
+          inputType: ARGUMENT_TYPE.NUMBER,
+        },
+      ],
     },
     {
       name: "Words",

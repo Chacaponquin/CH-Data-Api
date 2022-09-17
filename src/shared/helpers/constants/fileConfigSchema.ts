@@ -30,4 +30,5 @@ export const FileConfigSchema: FileOption[] = [
       { argument: "generateInterfaces", inputType: ARGUMENT_TYPE.BOOLEAN },
     ],
   },
+  { fileType: FILE_TYPE.JAVA, arguments: [] },
 ];

@@ -1,8 +1,16 @@
 import { Generator } from "./Generator";
 import fs from "fs";
 import { Parser } from "json2csv";
+import { ReturnDataset } from "../../socket/main/interfaces/datasets.interface";
 
 export class CSVGenerator extends Generator {
+  constructor(
+    data: ReturnDataset[],
+    args: { [path: string]: string | boolean }
+  ) {
+    super(data, "csv", args);
+  }
+
   public async generateFile(): Promise<string> {
     const json2csvParser = new Parser();
 

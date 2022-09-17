@@ -4,7 +4,10 @@ import { FormatterData } from "../FormatterData";
 import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
 
 export class JavascriptGenerator extends CodeGenerator {
-  constructor(datasets: ReturnDataset[], args: any) {
+  constructor(
+    datasets: ReturnDataset[],
+    args: { [path: string]: string | boolean }
+  ) {
     super(datasets, args, "js");
   }
 
@@ -22,7 +25,7 @@ export class JavascriptGenerator extends CodeGenerator {
     await fs.promises.writeFile(
       this.generatePublicRoute(fileName),
       returnData,
-      "utf8"
+      "utf-8"
     );
 
     return fileName;

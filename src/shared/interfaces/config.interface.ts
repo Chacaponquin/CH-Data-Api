@@ -7,7 +7,7 @@ export interface InputConfigSchema {
 
 export interface InputFileTypeConfig {
   fileType: FILE_TYPE;
-  arguments: any;
+  arguments: { [path: string]: string | boolean };
 }
 
 export interface FileOption {
@@ -20,4 +20,5 @@ export enum FILE_TYPE {
   CSV = "CSV",
   JAVASCRIPT = "JAVASCRIPT",
   TYPESCRIPT = "TYPESCRIPT",
+  JAVA = "JAVA",
 }

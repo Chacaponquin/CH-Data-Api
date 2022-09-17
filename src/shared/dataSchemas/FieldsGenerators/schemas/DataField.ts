@@ -6,7 +6,7 @@ export const DateField = (): TypeOptionSchema[] => {
   return [
     {
       exampleValue: faker.date.soon(),
-      getValue(args) {
+      getValue: (args) => {
         return faker.date.soon(args.days, args.refDate);
       },
       name: "Date Soon",

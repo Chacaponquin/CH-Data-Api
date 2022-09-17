@@ -105,4 +105,17 @@ export const FormatterData = {
 
     return returnObject;
   },
+
+  capitalizeMayusText(text: string): string {
+    let result = this.capitalizeText(text);
+    let newResult = "";
+
+    for (let i = 0; i < result.length; i++) {
+      newResult = newResult.concat(
+        i === 0 ? result[i].toUpperCase() : result[i]
+      );
+    }
+
+    return newResult;
+  },
 };

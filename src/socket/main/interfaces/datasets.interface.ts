@@ -1,6 +1,6 @@
 export interface ReturnDataset {
   name: string;
-  documents: any[];
+  documents: { [path: string]: any }[];
 }
 
 export interface Dataset {

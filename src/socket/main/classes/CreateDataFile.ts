@@ -10,12 +10,13 @@ import { TypescriptGenerator } from "../../../shared/classes/CodeGenerator/Types
 import { Generator } from "../../../shared/classes/Generator";
 import { JSONGenerator } from "../../../shared/classes/JSONGenerator";
 import { CSVGenerator } from "../../../shared/classes/CSVGenerator";
+import { JavaGenerator } from "../../../shared/classes/CodeGenerator/JavaGenerator";
 
 export class CreateDataFile {
   private data: ReturnDataset[] = [];
   private config: InputConfigSchema;
 
-  constructor(data: any[], config: InputConfigSchema) {
+  constructor(data: ReturnDataset[], config: InputConfigSchema) {
     if (!config) throw new InvalidConfig();
     else this.config = config;
 
@@ -24,7 +25,7 @@ export class CreateDataFile {
 
   public async generateFile(): Promise<string> {
     const fileType = this.config.file.fileType as FILE_TYPE;
-    const args = this.config.file.arguments;
+    const args = this.config.file.arguments || {};
 
     let generator: Generator;
 
@@ -42,7 +43,11 @@ export class CreateDataFile {
         break;
       }
       case FILE_TYPE.CSV: {
-        generator = new CSVGenerator(this.data, args, "csv");
+        generator = new CSVGenerator(this.data, args);
+        break;
+      }
+      case FILE_TYPE.JAVA: {
+        generator = new JavaGenerator(this.data, args);
         break;
       }
       default:

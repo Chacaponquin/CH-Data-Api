@@ -4,11 +4,15 @@ import path from "path";
 import { ReturnDataset } from "../../socket/main/interfaces/datasets.interface";
 
 export abstract class Generator {
-  private ext: string;
-  protected args: any;
+  protected ext: string;
+  protected args: { [path: string]: string | boolean };
   protected data: ReturnDataset[] = [];
 
-  constructor(data: ReturnDataset[], extension: string, args: any) {
+  constructor(
+    data: ReturnDataset[],
+    extension: string,
+    args: { [path: string]: string | boolean }
+  ) {
     this.ext = extension;
     this.args = args;
     this.data = data;
@@ -35,7 +39,7 @@ export abstract class Generator {
     const zipPath = this.generatePublicRoute(zipName);
 
     for (const file of filesNames)
-      zp.addLocalFile(path.join(__dirname, "../../../", file));
+      zp.addLocalFile(path.join(__dirname, "../../../public/", file));
 
     zp.writeZip(zipPath);
 

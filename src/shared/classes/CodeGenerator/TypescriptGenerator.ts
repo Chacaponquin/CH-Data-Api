@@ -5,7 +5,10 @@ import { FormatterData } from "../FormatterData";
 import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
 
 export class TypescriptGenerator extends CodeGenerator {
-  constructor(datasets: ReturnDataset[], args: any) {
+  constructor(
+    datasets: ReturnDataset[],
+    args: { [path: string]: string | boolean }
+  ) {
     super(datasets, args, "ts");
   }
 

@@ -17,7 +17,16 @@ export interface TypeOptionSchema {
   name: string;
   arguments: FieldArgumentSchema[];
   exampleValue: any;
-  getValue(args: any): any;
+  getValue(
+    args: any
+  ):
+    | string
+    | boolean
+    | number
+    | { [path: string]: string }
+    | Date
+    | number[][]
+    | string[];
 }
 
 export interface ApiFieldSchema extends TypeOptionSchema {
