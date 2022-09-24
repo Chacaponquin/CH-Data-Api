@@ -14,7 +14,10 @@ export class JavaGenerator extends CodeGenerator {
   protected async generateCodeFile(): Promise<string> {
     const allClasses: { class: string; docs: { [path: string]: any }[] }[] = [];
     for (const dat of this.data) {
-      const className: string = await this.generateClass(dat);
+      const className: string = await this.generateClass({
+        name: dat.name,
+        docExample: dat.documents[0],
+      });
 
       allClasses.push({ class: className, docs: dat.documents });
     }
@@ -34,13 +37,15 @@ export class JavaGenerator extends CodeGenerator {
   private async generateMainFile(
     classes: { class: string; docs: { [path: string]: any }[] }[]
   ): Promise<string> {
-    const createParameters = (values: { [path: string]: any }): string => {
+    const createParameters = async (values: {
+      [path: string]: any;
+    }): Promise<string> => {
       let returnVal = "";
       const keys = Object.keys(values);
 
       for (let i = 0; i < keys.length; i++) {
         returnVal +=
-          `${this.filterTypeValue(values[keys[i]])}` +
+          `${await this.filterTypeValue(values[keys[i]])}` +
           (i === keys.length - 1 ? "" : ", ");
       }
 
@@ -64,7 +69,7 @@ export class JavaGenerator extends CodeGenerator {
 
         classString += `${c.class} ${variableName} = new ${
           c.class
-        }(${createParameters(c.docs[i])});\n`;
+        }(${await createParameters(c.docs[i])});\n`;
 
         classString += `${arrayName}.add(${variableName});\n`;
       }
@@ -82,19 +87,24 @@ export class JavaGenerator extends CodeGenerator {
     return fileName;
   }
 
-  private async generateClass(dat: ReturnDataset): Promise<string> {
+  private async generateClass(classData: {
+    name: string;
+    docExample: { [path: string]: any };
+  }): Promise<string> {
     let classString = "public class ";
 
-    const className = FormatterData.capitalizeMayusText(dat.name);
+    const className = FormatterData.capitalizeMayusText(classData.name);
     const fileName = `${className}.${this.ext}`;
 
     classString += className + "{\n";
 
-    const doc = dat.documents[0];
+    const doc = classData.docExample;
     const keys = Object.keys(doc);
 
     for (const key of keys) {
-      classString += `\tprivate ${this.filterParentType(doc[key])} ${key};\n`;
+      classString += `\tprivate ${await this.filterParentType(
+        doc[key]
+      )} ${key};\n`;
     }
     classString += this.generateConstructor(className, doc);
     classString += "}";
@@ -108,7 +118,7 @@ export class JavaGenerator extends CodeGenerator {
     return fileName;
   }
 
-  private filterTypeValue(value: any): string {
+  private async filterTypeValue(value: any): Promise<string> {
     let returnString: any = "null";
 
     if (typeof value === "number") returnString = value;
@@ -116,14 +126,16 @@ export class JavaGenerator extends CodeGenerator {
     else if (typeof value === "boolean") returnString = `"${value}"`;
     else if (typeof value === "object") {
       if (Array.isArray(value)) {
-        returnString = `new ArrayList`;
+        returnString = `new ArrayList< ${await this.filterParentType(
+          value
+        )} >()`;
       }
     }
 
     return returnString;
   }
 
-  private filterParentType(value: any): string {
+  private async filterParentType(value: any): Promise<string> {
     let returnValue = "null";
 
     if (typeof value === "number") {
@@ -132,16 +144,25 @@ export class JavaGenerator extends CodeGenerator {
     } else if (typeof value === "string") returnValue = "String";
     else if (typeof value === "boolean") returnValue = `boolean`;
     else if (typeof value === "object") {
-      returnValue = `ArrayList< ${this.filterParentType(value[0])} >`;
+      if (Array.isArray(value))
+        returnValue = `ArrayList< ${await this.filterParentType(value[0])} >`;
+      else {
+        const className = await this.generateClass({
+          name: "AuxiliarClass",
+          docExample: value,
+        });
+
+        returnValue += `${className.split(".")[0]}`;
+      }
     }
 
     return returnValue;
   }
 
-  private generateConstructor(
+  private async generateConstructor(
     className: string,
     doc: { [path: string]: any }
-  ): string {
+  ): Promise<string> {
     const initializeVar = (): string => {
       let returnVal = "";
 
@@ -153,15 +174,15 @@ export class JavaGenerator extends CodeGenerator {
       return returnVal;
     };
 
-    const generateConstructorParameters = (values: {
+    const generateConstructorParameters = async (values: {
       [path: string]: any;
-    }): string => {
+    }): Promise<string> => {
       let returnString = "";
       const keys = Object.keys(values);
 
       for (let i = 0; i < keys.length; i++) {
         returnString +=
-          `${this.filterParentType(values[keys[i]])} ${keys[i]}` +
+          `${await this.filterParentType(values[keys[i]])} ${keys[i]}` +
           (i === keys.length - 1 ? "" : ", ");
       }
 
@@ -169,7 +190,7 @@ export class JavaGenerator extends CodeGenerator {
     };
 
     let returnString = "";
-    returnString += `\tpublic ${className}(${generateConstructorParameters(
+    returnString += `\tpublic ${className}(${await generateConstructorParameters(
       doc
     )}){\n\t`;
     returnString += `${initializeVar()}`;

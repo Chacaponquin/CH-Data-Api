@@ -9,11 +9,12 @@ export const createDatasets = async (
   socket: Socket,
   args: any = {}
 ): Promise<void> => {
-  const { token } = socket.handshake.auth as any;
-
-  const currentUser = await JwtActions.verifyToken(token);
+ 
 
   try {
+    const { token } = socket.handshake.auth as any;
+    const currentUser = await JwtActions.verifyToken(token);
+
     const datasets: Dataset[] = args.datasets as Dataset[];
     const config = args.config as InputConfigSchema;
 

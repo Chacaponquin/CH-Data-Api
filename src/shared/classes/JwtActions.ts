@@ -10,7 +10,7 @@ export const JwtActions = {
         return await User.findById(user.id);
       } else return null;
     } catch (error) {
-      throw error;
+      return null;
     }
   },
 };
