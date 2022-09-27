@@ -9,7 +9,7 @@ export const getMySchemasRoute = async (req: Request, res: Response) => {
       "datasetsSchemas"
     )) as any;
 
-    res.json({ schemas: datasetsSchemas }).end();
+    res.json(datasetsSchemas).end();
   } catch (error) {
     res.status(500).end();
   }

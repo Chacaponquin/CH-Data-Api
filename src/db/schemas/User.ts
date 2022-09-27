@@ -10,7 +10,7 @@ interface UserSchema {
   email: string | null;
   password: string | null;
   isSuperUser: boolean;
-  datasetsSchemas: any[];
+  datasetsSchemas: mongoose.Types.ObjectId[];
   image: string | null;
   methodLogin: LOGIN_METHODS;
 }

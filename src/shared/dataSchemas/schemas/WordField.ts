@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const WordField = (): TypeOptionSchema[] => {
   return [
     {
       name: "Adjective",
-      getValue: (args) => faker.word.adjective(args.length),
+      getValue: (args) => faker.word.adjective(args.length as number),
       exampleValue: faker.word.adjective(),
       arguments: [
         {
@@ -18,7 +18,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Adverb",
-      getValue: (args) => faker.word.adverb(args.length),
+      getValue: (args) => faker.word.adverb(args.length as number),
       exampleValue: faker.word.adverb(),
       arguments: [
         {
@@ -30,7 +30,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Conjuction",
-      getValue: (args) => faker.word.conjunction(args.length),
+      getValue: (args) => faker.word.conjunction(args.length as number),
       exampleValue: faker.word.conjunction(),
       arguments: [
         {
@@ -42,7 +42,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Interjection",
-      getValue: (args) => faker.word.interjection(args.length),
+      getValue: (args) => faker.word.interjection(args.length as number),
       exampleValue: faker.word.interjection(),
       arguments: [
         {
@@ -54,7 +54,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Noun",
-      getValue: (args) => faker.word.noun(args.length),
+      getValue: (args) => faker.word.noun(args.length as number),
       exampleValue: faker.word.noun(),
       arguments: [
         {
@@ -66,7 +66,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Preposition",
-      getValue: (args) => faker.word.preposition(args.length),
+      getValue: (args) => faker.word.preposition(args.length as number),
       exampleValue: faker.word.preposition(),
       arguments: [
         {
@@ -78,7 +78,7 @@ export const WordField = (): TypeOptionSchema[] => {
     },
     {
       name: "Verb",
-      getValue: (args) => faker.word.verb(args.length),
+      getValue: (args) => faker.word.verb(args.length as number),
       exampleValue: faker.word.verb(),
       arguments: [
         {

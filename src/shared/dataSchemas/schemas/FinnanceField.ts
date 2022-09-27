@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const FinanceField = (): TypeOptionSchema[] => {
   return [
@@ -30,7 +30,7 @@ export const FinanceField = (): TypeOptionSchema[] => {
     },
     {
       exampleValue: faker.finance.account(),
-      getValue: (args) => faker.finance.account(args.length),
+      getValue: (args) => faker.finance.account(args.length as number),
       name: "Account",
       arguments: [
         {
@@ -41,7 +41,7 @@ export const FinanceField = (): TypeOptionSchema[] => {
       ],
     },
     {
-      exampleValue: faker.finance.accountName,
+      exampleValue: faker.finance.accountName(),
       name: "Account Name",
       getValue: () => faker.finance.accountName(),
       arguments: [],

@@ -2,12 +2,14 @@ import { CodeGenerator } from "./CodeGenerator";
 import { JavascriptGenerator } from "./JavascriptGenerator";
 import fs from "fs";
 import { FormatterData } from "../FormatterData";
-import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../../socket/interfaces/datasets.interface";
+import { ConfigFileArgument } from "../../interfaces/config.interface";
+import { ReturnValue } from "../../interfaces/fields.interface";
 
 export class TypescriptGenerator extends CodeGenerator {
   constructor(
-    datasets: ReturnDataset[],
-    args: { [path: string]: string | boolean }
+    datasets: ReturnDataset<ReturnValue>[],
+    args: { [path: string]: ConfigFileArgument }
   ) {
     super(datasets, args, "ts");
   }
@@ -48,7 +50,7 @@ export class TypescriptGenerator extends CodeGenerator {
     return fileName;
   }
 
-  private generateDatasetInterface(dat: ReturnDataset): string {
+  private generateDatasetInterface(dat: ReturnDataset<ReturnValue>): string {
     let returnString = `interface I${FormatterData.capitalizeText(
       dat.name
     )}{\n`;

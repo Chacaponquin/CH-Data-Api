@@ -1,13 +1,16 @@
 import { faker } from "@faker-js/faker";
-import { InvalidArgumentError } from "../../../errors/InvalidArgument";
-import { randomChoiceList } from "../../../helpers/randomChoice";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { InvalidArgumentError } from "../../errors/InvalidArgument";
+import { randomChoiceList } from "../../helpers/randomChoice";
+import {
+  FieldArgument,
+  TypeOptionSchema,
+} from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const DataTypeField = (): TypeOptionSchema[] => {
   return [
     {
-      exampleValue: faker.datatype.array(),
+      exampleValue: faker.datatype.array().map((el) => String(el)),
       getValue: (args) => {
         return faker.datatype
           .array(Number(args.length))
@@ -72,8 +75,8 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       ],
     },
     {
-      exampleValue: faker.datatype.hexadecimal,
-      getValue: (args) => faker.datatype.hexadecimal(Number(args.length)),
+      exampleValue: faker.datatype.hexadecimal(),
+      getValue: (args) => faker.datatype.hexadecimal(args.length as number),
       name: "Hexadecimal",
       arguments: [
         {
@@ -139,7 +142,7 @@ export const DataTypeField = (): TypeOptionSchema[] => {
           Number(args.y_size) || faker.datatype.number({ min: 1, max: 10 });
         const min =
           Number(args.min) ||
-          faker.datatype.number({ min: 1, max: args.max || 10 });
+          faker.datatype.number({ min: 1, max: (args.max as number) || 10 });
         const max =
           Number(args.max) || faker.datatype.number({ min: min, max: 100 });
         const precision =
@@ -232,9 +235,10 @@ export const DataTypeField = (): TypeOptionSchema[] => {
         },
       ],
       getValue: (args) => {
-        if (Array.isArray(args.array)) {
-          return randomChoiceList(args.array);
-        } else return args.array;
+        const array = args.array as any[];
+        if (Array.isArray(array)) {
+          return randomChoiceList(array);
+        } else return null;
       },
     },
   ];

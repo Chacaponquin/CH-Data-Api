@@ -1,3 +1,4 @@
+import { FILE_TYPE } from "../helpers/constants/types.enum";
 import { ArgumentSchema } from "./dataArgument.interface";
 
 export interface InputConfigSchema {
@@ -7,7 +8,7 @@ export interface InputConfigSchema {
 
 export interface InputFileTypeConfig {
   fileType: FILE_TYPE;
-  arguments: { [path: string]: string | boolean };
+  arguments: { [path: string]: ConfigFileArgument };
 }
 
 export interface FileOption {
@@ -15,10 +16,4 @@ export interface FileOption {
   arguments: ArgumentSchema[];
 }
 
-export enum FILE_TYPE {
-  JSON = "JSON",
-  CSV = "CSV",
-  JAVASCRIPT = "JAVASCRIPT",
-  TYPESCRIPT = "TYPESCRIPT",
-  JAVA = "JAVA",
-}
+export type ConfigFileArgument = string | number | boolean;

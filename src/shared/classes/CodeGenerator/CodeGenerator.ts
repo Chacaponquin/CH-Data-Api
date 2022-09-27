@@ -1,8 +1,13 @@
-import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../../socket/interfaces/datasets.interface";
+import { ReturnValue } from "../../interfaces/fields.interface";
 import { Generator } from "../Generator";
 
 export abstract class CodeGenerator extends Generator {
-  constructor(datasets: ReturnDataset[], args: any, extension: string) {
+  constructor(
+    datasets: ReturnDataset<ReturnValue>[],
+    args: any,
+    extension: string
+  ) {
     super(datasets, extension, args);
   }
 

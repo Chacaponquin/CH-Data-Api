@@ -1,12 +1,14 @@
-import { ReturnDataset } from "../../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../../socket/interfaces/datasets.interface";
 import { FormatterData } from "../FormatterData";
 import { CodeGenerator } from "./CodeGenerator";
 import fs from "fs";
+import { ConfigFileArgument } from "../../interfaces/config.interface";
+import { ReturnValue } from "../../interfaces/fields.interface";
 
 export class JavaGenerator extends CodeGenerator {
   constructor(
-    datasets: ReturnDataset[],
-    args: { [path: string]: string | boolean }
+    datasets: ReturnDataset<ReturnValue>[],
+    args: { [path: string]: ConfigFileArgument }
   ) {
     super(datasets, args, "java");
   }

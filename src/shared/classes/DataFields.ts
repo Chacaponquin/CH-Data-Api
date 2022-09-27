@@ -17,15 +17,15 @@ import {
   SystemField,
   InternetField,
   VehicleField,
-} from "../dataSchemas/FieldsGenerators";
+} from "../dataSchemas";
 import {
   InitialOptionSchema,
   ApiParentData,
 } from "../interfaces/fields.interface";
 import { FormatterData } from "./FormatterData";
 
-export class DataFields {
-  public async getApiSections(): Promise<ApiParentData[]> {
+export abstract class DataFields {
+  public static async getApiSections(): Promise<ApiParentData[]> {
     const intialFields = await this.getFields();
 
     return intialFields.map((p: any) => {
@@ -41,7 +41,7 @@ export class DataFields {
     });
   }
 
-  public async getFields(): Promise<InitialOptionSchema[]> {
+  public static async getFields(): Promise<InitialOptionSchema[]> {
     return [
       { parent: "ID", fields: IDField() },
       { parent: "NAME", fields: NameField() },

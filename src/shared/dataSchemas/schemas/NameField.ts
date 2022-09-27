@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 const NAME_FIELD_ARGUMENTS = [
   {

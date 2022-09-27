@@ -1,12 +1,14 @@
-import { ReturnDataset } from "../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../socket/interfaces/datasets.interface";
 import { FormatterData } from "./FormatterData";
 import { Generator } from "./Generator";
 import fs from "fs";
+import { ConfigFileArgument } from "../interfaces/config.interface";
+import { ReturnValue } from "../interfaces/fields.interface";
 
 export class JSONGenerator extends Generator {
   constructor(
-    data: ReturnDataset[],
-    args: { [path: string]: string | boolean }
+    data: ReturnDataset<ReturnValue>[],
+    args: { [path: string]: ConfigFileArgument }
   ) {
     super(data, "json", args);
   }

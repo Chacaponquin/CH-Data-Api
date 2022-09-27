@@ -1,17 +1,19 @@
 import { faker } from "@faker-js/faker";
 import AdminZim from "adm-zip";
 import path from "path";
-import { ReturnDataset } from "../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../socket/interfaces/datasets.interface";
+import { ConfigFileArgument } from "../interfaces/config.interface";
+import { ReturnValue } from "../interfaces/fields.interface";
 
 export abstract class Generator {
   protected ext: string;
-  protected args: { [path: string]: string | boolean };
-  protected data: ReturnDataset[] = [];
+  protected args: { [path: string]: ConfigFileArgument };
+  protected data: ReturnDataset<ReturnValue>[] = [];
 
   constructor(
-    data: ReturnDataset[],
+    data: ReturnDataset<ReturnValue>[],
     extension: string,
-    args: { [path: string]: string | boolean }
+    args: { [path: string]: ConfigFileArgument }
   ) {
     this.ext = extension;
     this.args = args;

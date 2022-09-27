@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
 
 export const AnimalField = (): TypeOptionSchema[] => {
   return [

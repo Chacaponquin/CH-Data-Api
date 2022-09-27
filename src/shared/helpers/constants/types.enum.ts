@@ -1,0 +1,19 @@
+export enum FILE_TYPE {
+  JSON = "JSON",
+  CSV = "CSV",
+  JAVASCRIPT = "JAVASCRIPT",
+  TYPESCRIPT = "TYPESCRIPT",
+  JAVA = "JAVA",
+}
+
+export enum DATA_TYPES {
+  SINGLE_VALUE = "SINGLE_VALUE",
+  MIXED = "MIXED",
+  REF = "REF",
+  CUSTOM = "CUSTOM",
+}
+
+export enum CODE_TYPES {
+  JAVASCRIPT = "JAVASCRIPT",
+  PYTHON = "PYTHON",
+}

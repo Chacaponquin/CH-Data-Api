@@ -1,7 +1,7 @@
 import { ARGUMENT_TYPE } from "./fieldsTypes.enum";
 
-export interface ArgumentSchema {
+export type ArgumentSchema = {
   argument: string;
   inputType: ARGUMENT_TYPE;
   selectValues?: string[];
-}
+};

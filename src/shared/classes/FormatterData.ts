@@ -1,8 +1,9 @@
+import { DATA_TYPES } from "../helpers/constants/types.enum";
 import {
   ReturnDataset,
   DatasetField,
-  SingleValueDataType,
-} from "../../socket/main/interfaces/datasets.interface";
+} from "../../socket/interfaces/datasets.interface";
+import { ReturnValue } from "../interfaces/fields.interface";
 
 export const FormatterData = {
   isCapitalized(value: string): boolean {
@@ -78,26 +79,33 @@ export const FormatterData = {
     let object = {};
 
     for (const field of fieldsData) {
-      const { name, id, ...rest } = field;
+      const { name, id, dataType } = field;
 
-      const fieldDatatype = field.dataType as SingleValueDataType;
-
-      object = {
-        ...object,
-        [name]: {
-          type:
-            fieldDatatype.fieldType.parent + "/" + fieldDatatype.fieldType.type,
-          isArray: field.isArray,
-          args: fieldDatatype.fieldType.args,
-        },
-      };
+      if (dataType.type === DATA_TYPES.SINGLE_VALUE) {
+        object = {
+          ...object,
+          [name]: {
+            type: dataType.fieldType.parent + "/" + dataType.fieldType.type,
+            isArray: field.isArray,
+            args: dataType.fieldType.args,
+          },
+        };
+      }
     }
 
     return object;
   },
 
-  transformReturnDataToObject(data: ReturnDataset[]): any {
-    let returnObject = {};
+  transformReturnDataToObject(data: ReturnDataset<ReturnValue>[]): {
+    [p: string]: {
+      [k: string]: ReturnValue | ReturnValue[];
+    }[];
+  } {
+    let returnObject: {
+      [p: string]: {
+        [k: string]: ReturnValue | ReturnValue[];
+      }[];
+    } = {};
 
     for (const dat of data) {
       returnObject = { ...returnObject, [dat.name]: dat.documents };

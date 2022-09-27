@@ -1,5 +1,6 @@
 import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
-import { FILE_TYPE, FileOption } from "../../interfaces/config.interface";
+import { FileOption } from "../../interfaces/config.interface";
+import { FILE_TYPE } from "./types.enum";
 
 export const FileConfigSchema: FileOption[] = [
   {

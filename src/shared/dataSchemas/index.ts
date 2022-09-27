@@ -1,6 +1,6 @@
 import { AddressField } from "./schemas/AddressField";
 import { AnimalField } from "./schemas/AnimalField";
-import { DateField } from "./schemas/DataField";
+import { DateField } from "./schemas/DateField";
 import { DataTypeField } from "./schemas/DataTypeField";
 import { FinanceField } from "./schemas/FinnanceField";
 import { CodeField } from "./schemas/CodeField";

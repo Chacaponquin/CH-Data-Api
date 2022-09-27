@@ -4,7 +4,7 @@ interface DatasetSchema {
   name: string;
   data: any;
   author: any;
-  likes: any[];
+  likes: mongoose.Types.ObjectId[];
 }
 
 const dataSchema = new mongoose.Schema<DatasetSchema>(
@@ -13,7 +13,7 @@ const dataSchema = new mongoose.Schema<DatasetSchema>(
     data: { type: mongoose.SchemaTypes.Mixed, required: true },
     author: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
     likes: {
-      type: [{ type: mongoose.Types.ObjectId, required: true }],
+      type: [{ type: mongoose.Types.ObjectId, required: true, ref: "User" }],
       default: [],
     },
   },

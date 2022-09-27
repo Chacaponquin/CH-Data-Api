@@ -1,12 +1,14 @@
 import { Generator } from "./Generator";
 import fs from "fs";
 import { Parser } from "json2csv";
-import { ReturnDataset } from "../../socket/main/interfaces/datasets.interface";
+import { ReturnDataset } from "../../socket/interfaces/datasets.interface";
+import { ConfigFileArgument } from "../interfaces/config.interface";
+import { ReturnValue } from "../interfaces/fields.interface";
 
 export class CSVGenerator extends Generator {
   constructor(
-    data: ReturnDataset[],
-    args: { [path: string]: string | boolean }
+    data: ReturnDataset<ReturnValue>[],
+    args: { [path: string]: ConfigFileArgument }
   ) {
     super(data, "csv", args);
   }

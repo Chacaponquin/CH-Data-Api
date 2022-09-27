@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const InternetField = (): TypeOptionSchema[] => {
   return [
@@ -14,10 +14,10 @@ export const InternetField = (): TypeOptionSchema[] => {
       exampleValue: faker.internet.email(),
       getValue: (args) =>
         faker.internet.email(
-          args.firstName,
-          args.lastName,
-          args.provider,
-          args.allowSpecialCharacters
+          args.firstName as string,
+          args.lastName as string,
+          args.provider as string,
+          { allowSpecialCharacters: args.allowSpecialCharacters as boolean }
         ),
       name: "Email",
       arguments: [
@@ -47,7 +47,7 @@ export const InternetField = (): TypeOptionSchema[] => {
     },
     {
       exampleValue: faker.internet.password(),
-      getValue: (args) => faker.internet.password(args.length),
+      getValue: (args) => faker.internet.password(args.length as number),
       name: "Password",
       arguments: [
         {
@@ -66,7 +66,10 @@ export const InternetField = (): TypeOptionSchema[] => {
     {
       exampleValue: faker.internet.userName(),
       getValue: (args) =>
-        faker.internet.userName(args.firstName, args.lastName),
+        faker.internet.userName(
+          args.firstName as string,
+          args.lastName as string
+        ),
       name: "User Name",
       arguments: [
         {

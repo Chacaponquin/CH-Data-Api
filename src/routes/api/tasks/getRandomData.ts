@@ -3,13 +3,17 @@ import { DataFields } from "../../../shared/classes/DataFields";
 import { FormatterData } from "../../../shared/classes/FormatterData";
 import { faker } from "@faker-js/faker";
 import { InvalidArgumentError } from "../../../shared/errors/InvalidArgument";
+import {
+  FieldArgument,
+  ReturnValue,
+} from "../../../shared/interfaces/fields.interface";
 
 export const getRandomDataRoute = async (req: Request, res: Response) => {
   try {
     const { parent, field } = req.params;
     const { isArray, limit, ...queryArguments } = req.query;
 
-    const fields = await new DataFields().getFields();
+    const fields = await DataFields.getFields();
 
     const parentFound = fields.find((f) => {
       return (
@@ -27,21 +31,28 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
       });
 
       if (fieldFound) {
-        let value: any;
+        let returnValue: ReturnValue | ReturnValue[];
 
         if (isArray) {
-          value = [];
+          returnValue = [] as ReturnValue[];
 
           const newLimit = limit
             ? limit
-            : faker.datatype.number({ min: 2, max: 100 });
+            : faker.datatype.number({ min: 2, max: 50 });
 
           for (let i = 0; i < newLimit; i++) {
-            value.push(await fieldFound.getValue(queryArguments));
+            returnValue.push(
+              await fieldFound.getValue(
+                queryArguments as { [key: string]: FieldArgument }
+              )
+            );
           }
-        } else value = await fieldFound.getValue(queryArguments);
+        } else
+          returnValue = await fieldFound.getValue(
+            queryArguments as { [key: string]: FieldArgument }
+          );
 
-        res.json(value).end();
+        res.json(returnValue).end();
       } else res.status(404).end();
     } else res.status(404).end();
   } catch (error: any) {

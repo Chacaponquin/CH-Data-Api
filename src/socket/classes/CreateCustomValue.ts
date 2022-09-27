@@ -1,21 +1,22 @@
-import { randomChoiceList } from "../../../shared/helpers/randomChoice";
+import { randomChoiceList } from "../../shared/helpers/randomChoice";
+import { ReturnValue } from "../../shared/interfaces/fields.interface";
+import { CODE_TYPES } from "../../shared/helpers/constants/types.enum";
 import { CreateCustomFieldError } from "../errors/CreateCustomFieldError";
 import { CustomCodeInvalidError } from "../errors/CustomCodeInvalidError";
-import { CODE_TYPES, CustomDataType } from "../interfaces/datasets.interface";
+import { DatasetField } from "../interfaces/datasets.interface";
+import { CustomDataType } from "../interfaces/dataType.interface";
 
 export class CreateCustomValue {
-  private doc: any;
-  private dataType: CustomDataType;
+  private doc: DatasetField<CustomDataType>;
 
-  constructor(doc: any, dataType: CustomDataType) {
+  constructor(doc: DatasetField<CustomDataType>) {
     this.doc = doc;
-    this.dataType = dataType;
   }
 
-  public generateValue(): any {
-    switch (this.dataType.codeType) {
+  public async generateValue(): Promise<ReturnValue> {
+    switch (this.doc.dataType.codeType) {
       case CODE_TYPES.JAVASCRIPT: {
-        const functionCode = this.dataType.code;
+        const functionCode = this.doc.dataType.code;
 
         const contentCode: string = functionCode.slice(
           functionCode.indexOf("{") + 1,

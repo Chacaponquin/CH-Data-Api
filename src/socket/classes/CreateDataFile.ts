@@ -1,22 +1,21 @@
-import {
-  InputConfigSchema,
-  FILE_TYPE,
-} from "../../../shared/interfaces/config.interface";
+import { InputConfigSchema } from "../../shared/interfaces/config.interface";
 import { ReturnDataset } from "../interfaces/datasets.interface";
 import { InvalidConfig } from "../errors/InvalidConfig";
 import { InvalidFileTypeError } from "../errors/InvalidFileTypeError";
-import { JavascriptGenerator } from "../../../shared/classes/CodeGenerator/JavascriptGenerator";
-import { TypescriptGenerator } from "../../../shared/classes/CodeGenerator/TypescriptGenerator";
-import { Generator } from "../../../shared/classes/Generator";
-import { JSONGenerator } from "../../../shared/classes/JSONGenerator";
-import { CSVGenerator } from "../../../shared/classes/CSVGenerator";
-import { JavaGenerator } from "../../../shared/classes/CodeGenerator/JavaGenerator";
+import { JavascriptGenerator } from "../../shared/classes/CodeGenerator/JavascriptGenerator";
+import { TypescriptGenerator } from "../../shared/classes/CodeGenerator/TypescriptGenerator";
+import { Generator } from "../../shared/classes/Generator";
+import { JSONGenerator } from "../../shared/classes/JSONGenerator";
+import { CSVGenerator } from "../../shared/classes/CSVGenerator";
+import { JavaGenerator } from "../../shared/classes/CodeGenerator/JavaGenerator";
+import { FILE_TYPE } from "../../shared/helpers/constants/types.enum";
+import { ReturnValue } from "../../shared/interfaces/fields.interface";
 
 export class CreateDataFile {
-  private data: ReturnDataset[] = [];
+  private data: ReturnDataset<ReturnValue>[] = [];
   private config: InputConfigSchema;
 
-  constructor(data: ReturnDataset[], config: InputConfigSchema) {
+  constructor(data: ReturnDataset<ReturnValue>[], config: InputConfigSchema) {
     if (!config) throw new InvalidConfig();
     else this.config = config;
 

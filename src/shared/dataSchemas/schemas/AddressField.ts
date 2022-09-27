@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
 
 export const AddressField = (): TypeOptionSchema[] => {
   faker.address;
@@ -30,7 +30,7 @@ export const AddressField = (): TypeOptionSchema[] => {
     },
     {
       name: "Country Code",
-      exampleValue: faker.address.countryCode,
+      exampleValue: faker.address.countryCode(),
       getValue: () => faker.address.countryCode(),
       arguments: [],
     },

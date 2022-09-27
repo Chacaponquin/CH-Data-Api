@@ -33,5 +33,5 @@ export const getFAQ = (req: Request, res: Response) => {
     },
   ];
 
-  res.json({ faq: initialFAQ }).end();
+  res.json(initialFAQ).end();
 };

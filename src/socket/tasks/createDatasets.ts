@@ -1,16 +1,15 @@
 import { Dataset, ReturnDataset } from "../interfaces/datasets.interface";
-import { InputConfigSchema } from "../../../shared/interfaces/config.interface";
+import { InputConfigSchema } from "../../shared/interfaces/config.interface";
 import { CreateDataFile } from "../classes/CreateDataFile";
 import { CreateDatasets } from "../classes/CreateDatasets";
 import { Socket } from "socket.io";
-import { JwtActions } from "../../../shared/classes/JwtActions";
+import { JwtActions } from "../../shared/classes/JwtActions";
+import { ReturnValue } from "../../shared/interfaces/fields.interface";
 
 export const createDatasets = async (
   socket: Socket,
   args: any = {}
 ): Promise<void> => {
- 
-
   try {
     const { token } = socket.handshake.auth as any;
     const currentUser = await JwtActions.verifyToken(token);
@@ -20,7 +19,8 @@ export const createDatasets = async (
 
     const creatorDatasets = new CreateDatasets(socket, datasets);
 
-    const allData: ReturnDataset[] = await creatorDatasets.createData();
+    const allData: ReturnDataset<ReturnValue>[] =
+      await creatorDatasets.createData();
 
     const creator = new CreateDataFile(allData, config);
 

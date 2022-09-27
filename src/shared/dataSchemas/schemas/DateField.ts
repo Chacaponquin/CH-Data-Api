@@ -1,13 +1,16 @@
 import { faker, FakerError } from "@faker-js/faker";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const DateField = (): TypeOptionSchema[] => {
   return [
     {
       exampleValue: faker.date.soon(),
       getValue: (args) => {
-        return faker.date.soon(args.days, args.refDate);
+        return faker.date.soon(
+          (args.days as number) || 10,
+          args.refDate as Date
+        );
       },
       name: "Date Soon",
       arguments: [
@@ -26,7 +29,8 @@ export const DateField = (): TypeOptionSchema[] => {
     },
     {
       exampleValue: faker.date.past(),
-      getValue: (args) => faker.date.past(args.years, args.refDate),
+      getValue: (args) =>
+        faker.date.past((args.years as number) || 10, args.refDate as Date),
       name: "Date Past",
       arguments: [
         {
@@ -44,7 +48,8 @@ export const DateField = (): TypeOptionSchema[] => {
     },
     {
       exampleValue: faker.date.future(),
-      getValue: (args) => faker.date.future(args.years, args.refDate),
+      getValue: (args) =>
+        faker.date.future((args.years as number) || 10, args.refDate as Date),
       name: "Date Future",
       arguments: [
         {
@@ -76,8 +81,8 @@ export const DateField = (): TypeOptionSchema[] => {
       exampleValue: faker.date.birthdate(),
       getValue: (args) =>
         faker.date.birthdate({
-          min: args.min,
-          max: args.max,
+          min: (args.min as number) || 1,
+          max: (args.max as number) || 99,
         }),
       name: "BirthDate",
       arguments: [
@@ -100,8 +105,8 @@ export const DateField = (): TypeOptionSchema[] => {
       ),
       getValue: (args) =>
         faker.date.between(
-          args.from ? args.from : faker.date.past(100),
-          args.to ? args.to : new Date()
+          (args.from as Date) || faker.date.past(100),
+          (args.to as Date) || new Date()
         ),
       name: "Date Between",
       arguments: [

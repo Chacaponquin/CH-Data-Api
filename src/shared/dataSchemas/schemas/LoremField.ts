@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { InvalidArgumentError } from "../../../errors/InvalidArgument";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
-import { ARGUMENT_TYPE } from "../../../interfaces/fieldsTypes.enum";
+import { InvalidArgumentError } from "../../errors/InvalidArgument";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
+import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
 
 export const LoremField = (): TypeOptionSchema[] => {
   return [
@@ -15,7 +15,7 @@ export const LoremField = (): TypeOptionSchema[] => {
           );
         }
 
-        return faker.lorem.lines(args.count);
+        return faker.lorem.lines(args.count as number);
       },
       arguments: [
         {
@@ -35,7 +35,10 @@ export const LoremField = (): TypeOptionSchema[] => {
             "La cantidad de lineas no puede ser menor a 1"
           );
         }
-        return faker.lorem.paragraphs(args.count, args.separator);
+        return faker.lorem.paragraphs(
+          args.count as number,
+          args.separator as string
+        );
       },
       arguments: [
         {
@@ -54,7 +57,8 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Sentences",
       exampleValue: faker.lorem.sentences(),
-      getValue: (args) => faker.lorem.sentences(args.count, args.separator),
+      getValue: (args) =>
+        faker.lorem.sentences(args.count as number, args.separator as string),
       arguments: [
         {
           argument: "count",
@@ -71,7 +75,7 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Slug",
       exampleValue: faker.lorem.slug(),
-      getValue: (args) => faker.lorem.slug(args.wordCount),
+      getValue: (args) => faker.lorem.slug(args.wordCount as number),
       arguments: [
         {
           argument: "wordCount",
@@ -86,8 +90,8 @@ export const LoremField = (): TypeOptionSchema[] => {
       getValue: (args) => {
         let text = faker.lorem.text();
 
-        const charMin = args.charactersMin || 10;
-        const charMax = args.charactersMax || 300;
+        const charMin = (args.charactersMin as number) || 10;
+        const charMax = (args.charactersMax as number) || 300;
 
         if (charMax < 1 || charMin < 1) {
           throw new InvalidArgumentError(
@@ -123,7 +127,7 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Words",
       exampleValue: faker.lorem.words(),
-      getValue: ({ count }) => faker.lorem.words(count),
+      getValue: ({ count }) => faker.lorem.words(count as number),
       arguments: [
         {
           argument: "count",

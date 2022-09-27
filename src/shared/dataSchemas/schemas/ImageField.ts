@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import Images from "../../../../db/schemas/Images";
-import { CreateFieldObjectError } from "../../../errors/CreateFieldObjectError";
-import { randomChoiceList } from "../../../helpers/randomChoice";
-import { TypeOptionSchema } from "../../../interfaces/fields.interface";
+import Images from "../../../db/schemas/Images";
+import { CreateFieldObjectError } from "../../errors/CreateFieldObjectError";
+import { randomChoiceList } from "../../helpers/randomChoice";
+import { TypeOptionSchema } from "../../interfaces/fields.interface";
 
 export const ImageField = async (): Promise<TypeOptionSchema[]> => {
   let allTopics: TypeOptionSchema[] = [];
