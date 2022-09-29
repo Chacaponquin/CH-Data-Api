@@ -21,7 +21,7 @@ export type SingleValueDataType = {
 };
 export type MixedDataType = {
   type: DATA_TYPES.MIXED;
-  object: DatasetField[];
+  object: DatasetField<SingleValueDataType>[];
 };
 export type CustomDataType = {
   type: DATA_TYPES.CUSTOM;

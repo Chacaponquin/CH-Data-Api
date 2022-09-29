@@ -22,12 +22,6 @@ export const SystemField = (): TypeOptionSchema[] => {
       arguments: [],
     },
     {
-      exampleValue: faker.system.fileType(),
-      getValue: () => faker.system.fileType(),
-      name: "File Type",
-      arguments: [],
-    },
-    {
       exampleValue: faker.system.directoryPath(),
       getValue: () => faker.system.directoryPath(),
       name: "Directory Path",

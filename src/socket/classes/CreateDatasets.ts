@@ -96,9 +96,9 @@ export class CreateDatasets {
               allValues.push(val[i].getValue());
             }
 
-            mod = { [key]: allValues };
+            mod = { ...mod, [key]: allValues };
           } else {
-            mod = { [key]: val.getValue() };
+            mod = { ...mod, [key]: val.getValue() };
           }
         }
 

@@ -230,15 +230,16 @@ export const DataTypeField = (): TypeOptionSchema[] => {
       arguments: [
         {
           argument: "array",
-          inputType: ARGUMENT_TYPE.CUSTOM_ARRAY,
+          inputType: ARGUMENT_TYPE.TEXT,
           description: "",
         },
       ],
       getValue: (args) => {
-        const array = args.array as any[];
-        if (Array.isArray(array)) {
-          return randomChoiceList(array);
-        } else return null;
+        const array = args.array as string;
+
+        const allValues = array.split(",");
+
+        return randomChoiceList(allValues);
       },
     },
   ];

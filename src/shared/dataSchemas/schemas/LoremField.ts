@@ -75,10 +75,10 @@ export const LoremField = (): TypeOptionSchema[] => {
     {
       name: "Slug",
       exampleValue: faker.lorem.slug(),
-      getValue: (args) => faker.lorem.slug(args.wordCount as number),
+      getValue: (args) => faker.lorem.slug(args.word_count as number),
       arguments: [
         {
-          argument: "wordCount",
+          argument: "word_count",
           inputType: ARGUMENT_TYPE.NUMBER,
           description: "Cantidad de palabras",
         },
@@ -90,8 +90,8 @@ export const LoremField = (): TypeOptionSchema[] => {
       getValue: (args) => {
         let text = faker.lorem.text();
 
-        const charMin = (args.charactersMin as number) || 10;
-        const charMax = (args.charactersMax as number) || 300;
+        const charMin = (args.characters_min as number) || 10;
+        const charMax = (args.characters_max as number) || 300;
 
         if (charMax < 1 || charMin < 1) {
           throw new InvalidArgumentError(
@@ -113,12 +113,12 @@ export const LoremField = (): TypeOptionSchema[] => {
       },
       arguments: [
         {
-          argument: "charactersMax",
+          argument: "characters_max",
           description: "Cantidad de caracteres que no puede superar el texto",
           inputType: ARGUMENT_TYPE.NUMBER,
         },
         {
-          argument: "charactersMin",
+          argument: "characters_min",
           description: "Cantidad mínima de caracteres que debe tener el texto",
           inputType: ARGUMENT_TYPE.NUMBER,
         },
