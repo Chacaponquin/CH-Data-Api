@@ -138,7 +138,6 @@ export class JavaGenerator extends CodeGenerator {
         (i === keys.length - 1 ? "" : ", ");
     }
 
-    console.log(returnVal);
     return returnVal;
   };
 
