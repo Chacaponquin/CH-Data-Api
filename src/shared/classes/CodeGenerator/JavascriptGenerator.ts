@@ -33,52 +33,63 @@ export class JavascriptGenerator extends CodeGenerator {
     return fileName;
   }
 
-  public generateDatasetArray(datasetFields: any[]): string {
+  public generateDatasetArray(
+    datasetFields: { [path: string]: ReturnValue | ReturnValue[] }[]
+  ): string {
     let returnArray = `[`;
 
-    for (const doc of datasetFields) {
-      returnArray += `${this.generateObjectData(doc)}`;
+    for (let i = 0; i < datasetFields.length; i++) {
+      if (i !== datasetFields.length - 1)
+        returnArray += `${this.generateObjectData(datasetFields[i])}, `;
+      else returnArray += `${this.generateObjectData(datasetFields[i])}`;
     }
 
-    returnArray += "] ";
+    returnArray += "]\n";
 
     return returnArray;
   }
 
-  public generateObjectData(doc: any): string {
-    let objectData = `{`;
-
-    const values = Object.values(doc) as any[];
-
-    for (let i = 0; i < values.length; i++) {
-      let key = Object.keys(doc)[i];
-      const value = this.filterTypeValue(values[i]);
-      objectData += `${key}: ${value},`;
-    }
-
-    objectData += "},";
-
-    return objectData;
-  }
-
-  private filterTypeValue(value: any): string {
+  private filterTypeValue(value: ReturnValue | ReturnValue[]): string {
     let returnValue = "undefined";
 
-    if (typeof value == "string") returnValue = this.generateString(value);
-    else if (typeof value == "number" || typeof value == "boolean")
+    if (typeof value === "string") returnValue = this.generateString(value);
+    else if (typeof value === "number" || typeof value === "boolean")
       returnValue = `${value}`;
-    else if (typeof value == "object") {
+    else if (typeof value === "object") {
       if (Array.isArray(value)) returnValue = this.generateArray(value);
+      else {
+        if (value === null) returnValue = "null";
+        else if (value instanceof Date) returnValue = `${value.toString()}`;
+        else returnValue = this.generateObjectData(value);
+      }
     }
 
     return returnValue;
   }
 
-  private generateArray(array: string[] | number[]): string {
+  public generateObjectData(doc: {
+    [key: string]: ReturnValue | ReturnValue[];
+  }): string {
+    let objectData = `{`;
+
+    const keys = Object.keys(doc);
+    for (const key of keys) {
+      const value = this.filterTypeValue(doc[key]);
+      objectData += `${key}: ${value},`;
+    }
+
+    objectData += "}";
+
+    return objectData;
+  }
+
+  private generateArray(array: ReturnValue[]): string {
     let returnArray = "[";
 
-    for (let value of array) {
-      returnArray += `${this.filterTypeValue(value)}, `;
+    for (let i = 0; i < array.length; i++) {
+      if (i !== array.length - 1) {
+        returnArray += `${this.filterTypeValue(array[i])}, `;
+      } else returnArray += `${this.filterTypeValue(array[i])}`;
     }
 
     returnArray += "]";

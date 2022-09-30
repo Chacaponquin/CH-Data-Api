@@ -26,6 +26,7 @@ import { Types } from "mongoose";
 import { CreateCustomValue } from "./CreateCustomValue";
 import {
   CustomDataType,
+  FieldDataType,
   MixedDataType,
   RefDataType,
   SingleValueDataType,
@@ -84,35 +85,7 @@ export class CreateDatasets {
     await this.generateCustomFields();
 
     //COPIAR LOS VALORES DE LOS CAMPOS PARA LOS DATASETS QUE SERAN ENVIADOS
-    this.returnDatasets = this.transformDatasets.map((dat) => {
-      const newDocs = dat.documents.map((doc) => {
-        let mod: { [path: string]: ReturnValue | ReturnValue[] } = {};
-
-        for (const key of Object.keys(doc)) {
-          const val = doc[key];
-          if (Array.isArray(val)) {
-            let allValues: ReturnValue[] = [];
-            for (let i = 0; i < val.length; i++) {
-              allValues.push(val[i].getValue());
-            }
-
-            mod = { ...mod, [key]: allValues };
-          } else {
-            mod = { ...mod, [key]: val.getValue() };
-          }
-        }
-
-        return mod;
-      });
-
-      const newDat: ReturnDataset<ReturnValue> = {
-        documents: newDocs,
-        id: dat.id,
-        name: dat.name,
-      };
-
-      return newDat;
-    });
+    this.copyToReturnDatasets();
 
     return this.returnDatasets;
   }
@@ -144,13 +117,6 @@ export class CreateDatasets {
       } else {
         saveValue = await this.generateFieldValue(field);
       }
-
-      /*if (field.isPosibleNull) {
-        const array = new Array(100)
-          .fill(0)
-          .map((el) => randomChoiceList([null, saveValue]));
-        saveValue = randomChoiceList(array);
-      }*/
 
       fieldsData = { ...fieldsData, [field.name]: saveValue };
     }
@@ -350,6 +316,49 @@ export class CreateDatasets {
         }
       );
     }
+  }
+
+  private generatePosibleNullValue(
+    field: IFieldTransform<FieldDataType>
+  ): ReturnValue | null {
+    if (field.getFieldSchema().isPosibleNull) {
+      const array = new Array(100)
+        .fill(0)
+        .map((el) => randomChoiceList([null, field.getValue()]));
+      return randomChoiceList(array);
+    } else return field.getValue();
+  }
+
+  private copyToReturnDatasets(): void {
+    this.returnDatasets = this.transformDatasets.map((dat) => {
+      const newDocs = dat.documents.map((doc) => {
+        let mod: { [path: string]: ReturnValue | ReturnValue[] } = {};
+
+        for (const key of Object.keys(doc)) {
+          const val = doc[key];
+          if (Array.isArray(val)) {
+            let allValues: ReturnValue[] = [];
+            for (let i = 0; i < val.length; i++) {
+              allValues.push(this.generatePosibleNullValue(val[i]));
+            }
+
+            mod = { ...mod, [key]: allValues };
+          } else {
+            mod = { ...mod, [key]: this.generatePosibleNullValue(val) };
+          }
+        }
+
+        return mod;
+      });
+
+      const newDat: ReturnDataset<ReturnValue> = {
+        documents: newDocs,
+        id: dat.id,
+        name: dat.name,
+      };
+
+      return newDat;
+    });
   }
 
   private validateDataInput(): void {}
