@@ -80,10 +80,8 @@ export class CreateDatasets {
 
     //GENERAR LOS CAMPOS REF
     this.generateRefFields();
-
     //GENERAR LOS CAMPOS CUSTOM
     await this.generateCustomFields();
-
     //COPIAR LOS VALORES DE LOS CAMPOS PARA LOS DATASETS QUE SERAN ENVIADOS
     this.copyToReturnDatasets();
 

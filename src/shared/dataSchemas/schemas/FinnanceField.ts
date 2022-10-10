@@ -20,7 +20,7 @@ export const FinanceField = (): TypeOptionSchema[] => {
       exampleValue: faker.finance.creditCardNumber(),
       getValue: () => faker.finance.creditCardNumber(),
       arguments: [],
-      name: "Creadit Card Number",
+      name: "Credit Card Number",
     },
     {
       exampleValue: faker.finance.ethereumAddress(),

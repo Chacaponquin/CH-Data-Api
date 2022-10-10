@@ -43,7 +43,6 @@ app.use("/", createContextUser);
 
 app.use("/auth", ROUTES.AUTHENTICATION_ROUTES);
 app.use("/util", ROUTES.UTIL_ROUTES);
-app.use("/admin", ROUTES.ADMIN_ROUTES);
 app.use("/user", ROUTES.USER_ROUTES);
 app.use("/api", ROUTES.API_ROUTES);
 

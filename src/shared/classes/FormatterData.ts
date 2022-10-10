@@ -75,6 +75,7 @@ export const FormatterData = {
       return returnString;
     } else return text;
   },
+
   getObjectSchema(fieldsData: DatasetField[]): any {
     let object = {};
 
