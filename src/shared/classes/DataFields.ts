@@ -1,24 +1,4 @@
 import {
-  AnimalField,
-  JobField,
-  NameField,
-  PhoneField,
-  MusicField,
-  WordField,
-  LoremField,
-  ImageField,
-  DataTypeField,
-  AddressField,
-  IDField,
-  VideoField,
-  FinanceField,
-  DateField,
-  CodeField,
-  SystemField,
-  InternetField,
-  VehicleField,
-} from "../dataSchemas";
-import {
   InitialOptionSchema,
   ApiParentData,
 } from "../interfaces/fields.interface";

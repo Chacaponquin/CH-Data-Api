@@ -1,44 +1,33 @@
-import { ArgumentSchema } from "./dataArgument.interface";
+import { ARGUMENT_TYPE } from "./fieldsTypes.enum";
+
+export type ArgumentSchema = {
+  argument: string;
+  inputType: ARGUMENT_TYPE;
+  selectValues?: string[];
+  description: ApiDescription;
+};
 
 export interface InitialOptionSchema {
   parent: string;
-  fields: TypeOptionSchema[];
+  fields: OptionSchema[];
 }
 
-export interface FieldArgumentSchema extends ArgumentSchema {
-  description: string;
-}
-
-export interface TypeOptionSchema {
+export interface OptionSchema<Z = unknown, T = any> {
   name: string;
-  arguments: FieldArgumentSchema[];
-  exampleValue: ReturnValue;
-  getValue(args: { [key: string]: FieldArgument }): ReturnValue;
+  arguments: ArgumentSchema[];
+  exampleValue: Z;
+  description: ApiDescription;
+  getValue: (args: T) => Z;
 }
 
-export type ReturnValue =
-  | string
-  | boolean
-  | number
-  | { [path: string]: ReturnValue }
-  | Date
-  | number[][]
-  | string[]
-  | null
-  | number[];
-
-export type FieldArgument =
-  | string
-  | number
-  | Date
-  | string[]
-  | number[]
-  | boolean
-  | FieldArgument[];
+export interface ApiDescription {
+  es: string;
+  en: string;
+}
 
 export interface ApiParentData extends InitialOptionSchema {
   fields: ApiFieldSchema[];
 }
-export interface ApiFieldSchema extends TypeOptionSchema {
+export interface ApiFieldSchema extends OptionSchema {
   route: string;
 }

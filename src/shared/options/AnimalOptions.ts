@@ -1,0 +1,96 @@
+import { OptionSchema } from "../interfaces/fields.interface";
+import { schemas } from "chaca";
+
+export const AnimalOptions: OptionSchema[] = [
+  {
+    name: "Bear",
+    exampleValue: schemas.animal.bear().getValue(),
+    getValue: () => schemas.animal.bear().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Bird",
+    exampleValue: schemas.animal.bird().getValue(),
+    getValue: () => schemas.animal.bird().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Cat",
+    exampleValue: schemas.animal.cat().getValue(),
+    getValue: () => schemas.animal.cat().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Cetacean",
+    exampleValue: schemas.animal.cetacean().getValue(),
+    getValue: () => schemas.animal.cetacean().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Cow",
+    exampleValue: schemas.animal.cow().getValue(),
+    getValue: () => schemas.animal.cow().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Crocodilia",
+    exampleValue: schemas.animal.crocodilia().getValue(),
+    getValue: () => schemas.animal.crocodilia().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Dog",
+    exampleValue: schemas.animal.dog().getValue(),
+    getValue: () => schemas.animal.dog().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Horse",
+    exampleValue: schemas.animal.horse().getValue(),
+    getValue: () => schemas.animal.horse().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Insect",
+    exampleValue: schemas.animal.insect().getValue(),
+    getValue: () => schemas.animal.insect().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Lion",
+    exampleValue: schemas.animal.lion().getValue(),
+    getValue: () => schemas.animal.lion().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Rabbit",
+    exampleValue: schemas.animal.rabbit().getValue(),
+    getValue: () => schemas.animal.rabbit().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Snake",
+    exampleValue: schemas.animal.snake().getValue(),
+    getValue: () => schemas.animal.snake().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+  {
+    name: "Animal Type",
+    exampleValue: schemas.animal.animalType().getValue(),
+    getValue: () => schemas.animal.animalType().getValue,
+    arguments: [],
+    description: { en: "", es: "" },
+  },
+];
