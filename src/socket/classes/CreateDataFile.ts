@@ -8,7 +8,7 @@ import { Generator } from "../../shared/classes/Generator";
 import { JSONGenerator } from "../../shared/classes/JSONGenerator";
 import { CSVGenerator } from "../../shared/classes/CSVGenerator";
 import { JavaGenerator } from "../../shared/classes/CodeGenerator/JavaGenerator";
-import { FILE_TYPE } from "../../shared/helpers/constants/types.enum";
+import { FILE_TYPE } from "../../shared/constants/Types.enum";
 import { ReturnValue } from "../../shared/interfaces/fields.interface";
 
 export class CreateDataFile {

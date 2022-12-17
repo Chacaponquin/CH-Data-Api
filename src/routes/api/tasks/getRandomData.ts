@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DataFields } from "../../../shared/classes/DataFields";
+import { DataFields } from "../../../shared/classes/OptionController";
 import { FormatterData } from "../../../shared/classes/FormatterData";
 import { faker } from "@faker-js/faker";
 import { InvalidArgumentError } from "../../../shared/errors/InvalidArgument";

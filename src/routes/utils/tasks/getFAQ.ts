@@ -7,7 +7,7 @@ interface QuestionSchema {
 }
 
 export const getFAQ = (req: Request, res: Response) => {
-  const initialFAQ: QuestionSchema[] = [
+  const InitialFAQ: QuestionSchema[] = [
     {
       question: "Cuál es el máximo de datasets que se pueden crear",
       answer:
@@ -26,12 +26,7 @@ export const getFAQ = (req: Request, res: Response) => {
         "Por ahora no, pero estamos desarrollando una para permitir la creación de datos en proyectos sin necesidad de utilizar la REST API",
       userEmail: "",
     },
-    {
-      question: "",
-      answer: "",
-      userEmail: "",
-    },
   ];
 
-  res.json(initialFAQ).end();
+  res.json(InitialFAQ).end();
 };

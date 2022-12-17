@@ -3,7 +3,7 @@ import User from "../../../db/schemas/User";
 import { WrongUser } from "../errors/WrongUser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
+import { LOGIN_METHODS } from "../../../shared/constants/LoginMethods.enum";
 
 export const signInUser = async (req: Request, res: Response) => {
   try {

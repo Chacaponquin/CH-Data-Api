@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import User from "../../../db/schemas/User";
 import jwt from "jsonwebtoken";
 import { AuthInput } from "../interface/auth.interface";
-import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
+import { LOGIN_METHODS } from "../../../shared/constants/LoginMethods.enum";
 
 export const createUserRoute = async (req: Request, res: Response) => {
   try {

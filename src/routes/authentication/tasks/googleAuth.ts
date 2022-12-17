@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import User from "../../../db/schemas/User";
 import jwt from "jsonwebtoken";
-import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
+import { LOGIN_METHODS } from "../../../shared/constants/LoginMethods.enum";
 
 export const googleAuthRoute = async (req: Request, res: Response) => {
   try {

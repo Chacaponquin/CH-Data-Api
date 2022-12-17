@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { LOGIN_METHODS } from "../../shared/helpers/constants/LoginMethods";
+import { LOGIN_METHODS } from "../../shared/constants/LoginMethods.enum";
 import {
   SUPER_USER_LIMITS,
   USER_LIMITS,
-} from "../../shared/helpers/constants/UserLimits";
+} from "../../shared/constants/UserLimits.enum";
 
 interface UserSchema {
   username: string;

@@ -1,4 +1,4 @@
-import { FILE_TYPE } from "../helpers/constants/types.enum";
+import { FILE_TYPE } from "../constants/Types.enum";
 import { ArgumentSchema } from "./dataArgument.interface";
 
 export interface InputConfigSchema {

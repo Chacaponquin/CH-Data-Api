@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { Socket } from "socket.io";
 import DatasetSchema from "../../db/schemas/DatasetSchema";
 import User from "../../db/schemas/User";
-import { DataFields } from "../../shared/classes/DataFields";
+import { DataFields } from "../../shared/classes/OptionController";
 import { randomChoiceList } from "../../shared/helpers/randomChoice";
 import {
   InitialOptionSchema,
@@ -32,7 +32,7 @@ import {
   SingleValueDataType,
 } from "../interfaces/dataType.interface";
 import { RefField } from "./RefField";
-import { DATA_TYPES } from "../../shared/helpers/constants/types.enum";
+import { DATA_TYPES } from "../../shared/constants/Types.enum";
 import { ResolveField } from "./ResolveField";
 import { CustomField } from "./CustomField";
 

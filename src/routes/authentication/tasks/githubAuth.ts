@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import User from "../../../db/schemas/User";
-import { LOGIN_METHODS } from "../../../shared/helpers/constants/LoginMethods";
+import { LOGIN_METHODS } from "../../../shared/constants/LoginMethods.enum";
 import jwt from "jsonwebtoken";
 
 export const githubAuthRoute = async (req: Request, res: Response) => {

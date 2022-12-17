@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FileConfigSchema } from "../../../shared/helpers/constants/fileConfigSchema";
+import { FileConfig } from "../../../shared/constants/FileConfig";
 
 export const getConfigFileOptionsRoute = (req: Request, res: Response) => {
-  res.json(FileConfigSchema).end();
+  res.json(FileConfig).end();
 };

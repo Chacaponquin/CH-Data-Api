@@ -7,9 +7,13 @@ export type ArgumentSchema = {
   description: ApiDescription;
 };
 
-export interface InitialOptionSchema {
+export interface ApiOption {
   parent: string;
-  fields: OptionSchema[];
+  options: OptionWithRoute[];
+}
+
+export interface OptionWithRoute extends OptionSchema {
+  route: string;
 }
 
 export interface OptionSchema<Z = unknown, T = any> {
@@ -23,11 +27,4 @@ export interface OptionSchema<Z = unknown, T = any> {
 export interface ApiDescription {
   es: string;
   en: string;
-}
-
-export interface ApiParentData extends InitialOptionSchema {
-  fields: ApiFieldSchema[];
-}
-export interface ApiFieldSchema extends OptionSchema {
-  route: string;
 }

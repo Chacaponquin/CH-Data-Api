@@ -1,7 +1,4 @@
-import {
-  CODE_TYPES,
-  DATA_TYPES,
-} from "../../shared/helpers/constants/types.enum";
+import { CODE_TYPES, DATA_TYPES } from "../../shared/constants/Types.enum";
 import { DatasetField, TypeSchema } from "./datasets.interface";
 
 export type FieldDataType =

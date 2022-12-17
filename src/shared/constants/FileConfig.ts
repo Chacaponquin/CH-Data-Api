@@ -1,8 +1,8 @@
-import { ARGUMENT_TYPE } from "../../interfaces/fieldsTypes.enum";
-import { FileOption } from "../../interfaces/config.interface";
-import { FILE_TYPE } from "./types.enum";
+import { ARGUMENT_TYPE } from "../interfaces/fieldsTypes.enum";
+import { FileOption } from "../interfaces/config.interface";
+import { FILE_TYPE } from "./Types.enum";
 
-export const FileConfigSchema: FileOption[] = [
+export const FileConfig: FileOption[] = [
   {
     fileType: FILE_TYPE.JSON,
     arguments: [

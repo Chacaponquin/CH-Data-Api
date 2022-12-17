@@ -1,6 +1,6 @@
 import { randomChoiceList } from "../../shared/helpers/randomChoice";
 import { ReturnValue } from "../../shared/interfaces/fields.interface";
-import { CODE_TYPES } from "../../shared/helpers/constants/types.enum";
+import { CODE_TYPES } from "../../shared/constants/Types.enum";
 import { CreateCustomFieldError } from "../errors/CreateCustomFieldError";
 import { CustomCodeInvalidError } from "../errors/CustomCodeInvalidError";
 import { DatasetField } from "../interfaces/datasets.interface";
