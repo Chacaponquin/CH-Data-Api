@@ -1,31 +1,32 @@
-import { Dataset, ReturnDataset } from "../interfaces/datasets.interface";
+import { InputDataset, ReturnDataset } from "../interfaces/datasets.interface";
 import { InputConfigSchema } from "../../shared/interfaces/config.interface";
-import { CreateDataFile } from "../classes/CreateDataFile";
-import { CreateDatasets } from "../classes/CreateDatasets";
+import { FileCreator } from "../classes/FileCreator";
+import { DatasetsCreator } from "../classes/DatasetsCreator";
 import { Socket } from "socket.io";
-import { JwtActions } from "../../shared/classes/JwtActions";
-import { ReturnValue } from "../../shared/interfaces/fields.interface";
+import { JwtActions } from "../../routes/authentication/utils/JwtActions";
 
 export const createDatasets = async (
   socket: Socket,
   args: any = {}
 ): Promise<void> => {
   try {
+    // autenticar usuario
     const { token } = socket.handshake.auth as any;
     const currentUser = await JwtActions.verifyToken(token);
 
-    const datasets: Dataset[] = args.datasets as Dataset[];
+    // obtener datasets y configuracion para la creacion
+    const datasets = args.datasets as InputDataset[];
     const config = args.config as InputConfigSchema;
 
-    const creatorDatasets = new CreateDatasets(socket, datasets);
+    // crear datos
+    const creatorDatasets = new DatasetsCreator(socket, datasets);
+    const allData = await creatorDatasets.createData();
 
-    const allData: ReturnDataset<ReturnValue>[] =
-      await creatorDatasets.createData();
-
-    const creator = new CreateDataFile(allData, config);
-
+    // crear archivo
+    const creator = new FileCreator(allData, config);
     const url = await creator.generateFile();
 
+    // guardar schema en el historial de usuario
     if (currentUser && config.saveSchema)
       await creatorDatasets.saveDataSchema(currentUser._id);
 

@@ -17,19 +17,11 @@ export const FileConfig: FileOption[] = [
   { fileType: FILE_TYPE.CSV, arguments: [] },
   {
     fileType: FILE_TYPE.JAVASCRIPT,
-    arguments: [
-      {
-        argument: "arquitecture",
-        inputType: ARGUMENT_TYPE.SELECT,
-        selectValues: ["Classes", "Variables"],
-      },
-    ],
+    arguments: [],
   },
   {
     fileType: FILE_TYPE.TYPESCRIPT,
-    arguments: [
-      { argument: "generate_interfaces", inputType: ARGUMENT_TYPE.BOOLEAN },
-    ],
+    arguments: [],
   },
   { fileType: FILE_TYPE.JAVA, arguments: [] },
 ];

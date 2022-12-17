@@ -1,5 +1,5 @@
 import { CODE_TYPES, DATA_TYPES } from "../../shared/constants/Types.enum";
-import { DatasetField, TypeSchema } from "./datasets.interface";
+import { InputDatasetField, TypeSchema } from "./datasets.interface";
 
 export type FieldDataType =
   | CustomDataType
@@ -18,7 +18,7 @@ export type SingleValueDataType = {
 };
 export type MixedDataType = {
   type: DATA_TYPES.MIXED;
-  object: DatasetField<SingleValueDataType>[];
+  object: InputDatasetField<SingleValueDataType>[];
 };
 export type CustomDataType = {
   type: DATA_TYPES.CUSTOM;

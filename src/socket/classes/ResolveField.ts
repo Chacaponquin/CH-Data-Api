@@ -1,33 +1,32 @@
-import { ReturnValue } from "../../shared/interfaces/fields.interface";
 import {
-  DatasetField,
+  InputDatasetField,
   IFieldTransform,
 } from "../interfaces/datasets.interface";
 
 export class ResolveField implements IFieldTransform {
   public id: string;
-  private value: ReturnValue;
-  private dataPending: DatasetField;
+  private value: any;
+  private dataPending: InputDatasetField;
 
-  constructor(id: string, value: ReturnValue, field: DatasetField) {
+  constructor(id: string, value: any, field: InputDatasetField) {
     this.id = id;
     this.value = value;
     this.dataPending = field;
   }
 
-  public getValue(): ReturnValue {
+  public getValue(): any {
     return this.value;
   }
 
-  public setValue(value: ReturnValue): void {
+  public setValue(value: any): void {
     this.value = value;
   }
 
-  public getFieldSchema(): DatasetField {
+  public getFieldSchema(): InputDatasetField {
     return this.dataPending;
   }
 
-  public setFieldSchema(field: DatasetField) {
+  public setFieldSchema(field: InputDatasetField) {
     this.dataPending = field;
   }
 }

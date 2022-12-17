@@ -1,34 +1,33 @@
-import { ReturnValue } from "../../shared/interfaces/fields.interface";
 import {
-  DatasetField,
   IFieldTransform,
+  InputDatasetField,
 } from "../interfaces/datasets.interface";
 import { CustomDataType } from "../interfaces/dataType.interface";
 
 export class CustomField implements IFieldTransform<CustomDataType> {
-  public dataPending: DatasetField<CustomDataType>;
+  public dataPending: InputDatasetField<CustomDataType>;
   public id: string;
-  private value: ReturnValue;
+  private value: any;
 
-  constructor(id: string, data: DatasetField<CustomDataType>) {
+  constructor(id: string, data: InputDatasetField<CustomDataType>) {
     this.dataPending = data;
     this.id = id;
     this.value = null;
   }
 
-  public getValue(): ReturnValue {
+  public getValue(): any {
     return this.value;
   }
 
-  public setValue(value: ReturnValue): void {
+  public setValue(value: any): void {
     this.value = value;
   }
 
-  public getFieldSchema(): DatasetField<CustomDataType> {
+  public getFieldSchema(): InputDatasetField<CustomDataType> {
     return this.dataPending;
   }
 
-  public setFieldSchema(field: DatasetField<CustomDataType>) {
+  public setFieldSchema(field: InputDatasetField<CustomDataType>) {
     this.dataPending = field;
   }
 }

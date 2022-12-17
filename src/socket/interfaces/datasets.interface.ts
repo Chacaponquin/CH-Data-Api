@@ -1,4 +1,3 @@
-import { ReturnValue } from "../../shared/interfaces/fields.interface";
 import { FieldDataType } from "./dataType.interface";
 
 export interface ReturnDataset<T> {
@@ -10,30 +9,28 @@ export interface ReturnDataset<T> {
 }
 
 export interface IFieldTransform<T = FieldDataType> {
-  getValue(): ReturnValue;
-  setValue(value: ReturnValue): void;
-  getFieldSchema(): DatasetField<T>;
-  setFieldSchema(field: DatasetField<T>): void;
+  getValue(): any;
+  setValue(value: any): void;
+  getFieldSchema(): InputDatasetField<T>;
+  setFieldSchema(field: InputDatasetField<T>): void;
 }
 
-export interface Dataset {
+export interface InputDataset {
   name: string;
   id: string;
   limit: number;
-  fields: DatasetField[];
+  fields: InputDatasetField[];
 }
 
-export interface DatasetField<T = FieldDataType> {
+export interface InputDatasetField<T = FieldDataType> {
   name: string;
   id: string;
   dataType: T;
   isPosibleNull: boolean;
-  isArray:
-    | {
-        min: number;
-        max: number;
-      }
-    | false;
+  isArray: null | {
+    min: number;
+    max: number;
+  };
 }
 
 export interface TypeSchema {

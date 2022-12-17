@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../../db/schemas/User";
+import User from "../../../db/schemas/User";
 
 export const JwtActions = {
   verifyToken: async (token: string) => {

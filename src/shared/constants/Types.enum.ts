@@ -1,9 +1,9 @@
 export enum FILE_TYPE {
-  JSON = "JSON",
-  CSV = "CSV",
-  JAVASCRIPT = "JAVASCRIPT",
-  TYPESCRIPT = "TYPESCRIPT",
-  JAVA = "JAVA",
+  JSON = "json",
+  CSV = "csv",
+  JAVASCRIPT = "javascript",
+  TYPESCRIPT = "typescript",
+  JAVA = "java",
 }
 
 export enum DATA_TYPES {

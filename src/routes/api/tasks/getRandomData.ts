@@ -1,32 +1,26 @@
+import { chaca } from "chaca";
 import { Request, Response } from "express";
-import { DataFields } from "../../../shared/classes/OptionController";
-import { FormatterData } from "../../../shared/classes/FormatterData";
-import { faker } from "@faker-js/faker";
-import { InvalidArgumentError } from "../../../shared/errors/InvalidArgument";
-import {
-  FieldArgument,
-  ReturnValue,
-} from "../../../shared/interfaces/fields.interface";
+import { OptionsController } from "../../../shared/classes/OptionController";
 
 export const getRandomDataRoute = async (req: Request, res: Response) => {
   try {
     const { parent, field } = req.params;
     const { isArray, limit, ...queryArguments } = req.query;
 
-    const fields = await DataFields.getFields();
+    const options = OptionsController.getApiOptions();
 
-    const parentFound = fields.find((f) => {
+    const parentFound = options.find((f) => {
       return (
-        FormatterData.capitalizeText(f.parent) ===
-        FormatterData.capitalizeText(parent)
+        chaca.utils.capitalizeText(f.parent) ===
+        chaca.utils.capitalizeText(parent)
       );
     });
 
     if (parentFound) {
-      const fieldFound = parentFound.fields.find((f) => {
+      const fieldFound = parentFound.options.find((f) => {
         return (
-          FormatterData.capitalizeText(f.name) ===
-          FormatterData.capitalizeText(field)
+          chaca.utils.capitalizeText(f.name) ===
+          chaca.utils.capitalizeText(field)
         );
       });
 
@@ -56,9 +50,6 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
       } else res.status(404).end();
     } else res.status(404).end();
   } catch (error: any) {
-    console.log(error);
-    if (error instanceof InvalidArgumentError) {
-      res.status(500).json({ error: error.message }).end();
-    } else res.status(500).json({ error: null }).end();
+    res.status(500).json({ error: null }).end();
   }
 };

@@ -1,19 +1,13 @@
-import { randomChoiceList } from "../../shared/helpers/randomChoice";
-import { ReturnValue } from "../../shared/interfaces/fields.interface";
 import { CODE_TYPES } from "../../shared/constants/Types.enum";
-import { CreateCustomFieldError } from "../errors/CreateCustomFieldError";
-import { CustomCodeInvalidError } from "../errors/CustomCodeInvalidError";
-import { DatasetField } from "../interfaces/datasets.interface";
+import { InputDatasetField } from "../interfaces/datasets.interface";
 import { CustomDataType } from "../interfaces/dataType.interface";
+import { chaca } from "chaca";
+import { ChacaDatasetError } from "../errors/ChacaDatasetError";
 
 export class CreateCustomValue {
-  private doc: DatasetField<CustomDataType>;
+  constructor(private readonly doc: InputDatasetField<CustomDataType>) {}
 
-  constructor(doc: DatasetField<CustomDataType>) {
-    this.doc = doc;
-  }
-
-  public async generateValue(): Promise<ReturnValue> {
+  public generateValue(): any {
     switch (this.doc.dataType.codeType) {
       case CODE_TYPES.JAVASCRIPT: {
         const functionCode = this.doc.dataType.code;
@@ -27,17 +21,20 @@ export class CreateCustomValue {
           const func = new Function(contentCode);
           const value = func.apply({
             ...this.doc,
-            oneOfArray: randomChoiceList,
+            oneOfArray: chaca.utils.oneOfArray,
           });
-          console.log(value);
 
           return value;
         } catch (error) {
-          throw new CreateCustomFieldError();
+          throw new ChacaDatasetError(
+            `Error in function of field ${this.doc.name}`
+          );
         }
       }
       default:
-        throw new CustomCodeInvalidError();
+        throw new ChacaDatasetError(
+          `${this.doc.dataType.codeType} is not a available code extension for a function`
+        );
     }
   }
 }
