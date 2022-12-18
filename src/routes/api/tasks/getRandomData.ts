@@ -1,4 +1,4 @@
-import { chaca } from "chaca";
+import { chaca, schemas } from "chaca";
 import { Request, Response } from "express";
 import { OptionsController } from "../../../shared/classes/OptionController";
 
@@ -25,26 +25,19 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
       });
 
       if (fieldFound) {
-        let returnValue: ReturnValue | ReturnValue[];
+        let returnValue;
 
         if (isArray) {
-          returnValue = [] as ReturnValue[];
+          returnValue = [];
 
           const newLimit = limit
             ? limit
-            : faker.datatype.number({ min: 2, max: 50 });
+            : schemas.dataType.number().getValue({ min: 2, max: 50 });
 
           for (let i = 0; i < newLimit; i++) {
-            returnValue.push(
-              await fieldFound.getValue(
-                queryArguments as { [key: string]: FieldArgument }
-              )
-            );
+            returnValue.push(fieldFound.getValue(queryArguments));
           }
-        } else
-          returnValue = await fieldFound.getValue(
-            queryArguments as { [key: string]: FieldArgument }
-          );
+        } else returnValue = fieldFound.getValue(queryArguments);
 
         res.json(returnValue).end();
       } else res.status(404).end();
