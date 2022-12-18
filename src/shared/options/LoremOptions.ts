@@ -6,7 +6,7 @@ export const LoremOptions: OptionSchema[] = [
   {
     name: "Paragraphs",
     exampleValue: schemas.lorem.paragraphs().getValue(),
-    getValue: schemas.lorem.paragraphs().getValue,
+    getValue: (a) => schemas.lorem.paragraphs().getValue(a),
     arguments: [
       {
         argument: "paragraphsCount",
@@ -34,7 +34,7 @@ export const LoremOptions: OptionSchema[] = [
   {
     name: "Sentences",
     exampleValue: schemas.lorem.sentences().getValue(),
-    getValue: schemas.lorem.sentences().getValue,
+    getValue: (a) => schemas.lorem.sentences().getValue(a),
     arguments: [
       {
         argument: "sentencesCount",
@@ -62,7 +62,7 @@ export const LoremOptions: OptionSchema[] = [
   {
     name: "Slug",
     exampleValue: schemas.lorem.slug().getValue(),
-    getValue: schemas.lorem.slug().getValue,
+    getValue: (a) => schemas.lorem.slug().getValue(a),
     arguments: [
       {
         argument: "wordCount",
@@ -75,7 +75,7 @@ export const LoremOptions: OptionSchema[] = [
   {
     name: "Text",
     exampleValue: schemas.lorem.text().getValue(),
-    getValue: schemas.lorem.text().getValue,
+    getValue: (a) => schemas.lorem.text().getValue(a),
     arguments: [
       {
         argument: "character_max",
@@ -93,7 +93,7 @@ export const LoremOptions: OptionSchema[] = [
   {
     name: "Words",
     exampleValue: schemas.lorem.words().getValue(),
-    getValue: schemas.lorem.words().getValue,
+    getValue: (a) => schemas.lorem.words().getValue(a),
     arguments: [
       {
         argument: "count",

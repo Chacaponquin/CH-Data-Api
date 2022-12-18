@@ -5,15 +5,15 @@ import { schemas } from "chaca";
 export const DataTypeOptions: OptionSchema[] = [
   {
     exampleValue: schemas.dataType.boolean().getValue(),
-    getValue: schemas.dataType.boolean().getValue,
+    getValue: (a) => schemas.dataType.boolean().getValue(a),
     name: "Boolean",
     arguments: [],
     description: { en: "", es: "" },
   },
   {
     exampleValue: schemas.dataType.int().getValue(),
-    getValue: schemas.dataType.int().getValue,
-    name: "Number Int",
+    getValue: (a) => schemas.dataType.int().getValue(a),
+    name: "Integer",
     arguments: [
       {
         argument: "min",
@@ -35,7 +35,7 @@ export const DataTypeOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.dataType.hexadecimal().getValue(),
-    getValue: schemas.dataType.hexadecimal().getValue,
+    getValue: (a) => schemas.dataType.hexadecimal().getValue(a),
     name: "Hexadecimal",
     arguments: [
       {
@@ -48,7 +48,7 @@ export const DataTypeOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.dataType.float().getValue(),
-    getValue: schemas.dataType.float().getValue,
+    getValue: (a) => schemas.dataType.float().getValue(a),
     name: "Float",
     arguments: [
       {
@@ -71,7 +71,7 @@ export const DataTypeOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.dataType.matriz().getValue(),
-    getValue: schemas.dataType.matriz().getValue,
+    getValue: (a) => schemas.dataType.matriz().getValue(a),
     name: "Matriz",
     arguments: [
       {

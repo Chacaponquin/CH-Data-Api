@@ -4,7 +4,7 @@ import { OptionSchema } from "../interfaces/fields.interface";
 export const PhoneOptions: OptionSchema[] = [
   {
     name: "Number",
-    getValue: schemas.phone.number().getValue,
+    getValue: (a) => schemas.phone.number().getValue(a),
     exampleValue: schemas.phone.number().getValue(),
     arguments: [],
     description: { en: "", es: "" },
@@ -12,7 +12,7 @@ export const PhoneOptions: OptionSchema[] = [
   {
     name: "Prefix",
     exampleValue: schemas.phone.prefix().getValue(),
-    getValue: schemas.phone.prefix().getValue,
+    getValue: (a) => schemas.phone.prefix().getValue(a),
     arguments: [],
     description: { en: "", es: "" },
   },
@@ -21,6 +21,6 @@ export const PhoneOptions: OptionSchema[] = [
     description: { en: "", es: "" },
     exampleValue: schemas.phone.callDuration(),
     name: "Call Duration",
-    getValue: schemas.phone.callDuration().getValue,
+    getValue: (a) => schemas.phone.callDuration().getValue(a),
   },
 ];

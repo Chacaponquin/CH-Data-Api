@@ -22,11 +22,11 @@ export const DateOptions: OptionSchema[] = [
         ],
       },
     ],
-    getValue: schemas.date.timeAgo().getValue,
+    getValue: (a) => schemas.date.timeAgo().getValue(a),
   },
   {
     exampleValue: schemas.date.soon().getValue(),
-    getValue: schemas.date.soon().getValue,
+    getValue: (a) => schemas.date.soon().getValue(a),
     name: "Date Soon",
     arguments: [
       {
@@ -44,7 +44,7 @@ export const DateOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.date.past().getValue(),
-    getValue: schemas.date.past().getValue,
+    getValue: (a) => schemas.date.past().getValue(a),
     name: "Date Past",
     arguments: [
       {
@@ -62,7 +62,7 @@ export const DateOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.date.future().getValue(),
-    getValue: schemas.date.future().getValue,
+    getValue: (a) => schemas.date.future().getValue(a),
     name: "Date Future",
     arguments: [
       {
@@ -80,21 +80,21 @@ export const DateOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.date.month().getValue(),
-    getValue: schemas.date.month().getValue,
+    getValue: (a) => schemas.date.month().getValue(a),
     name: "Month",
     arguments: [],
     description: { en: "", es: "" },
   },
   {
     exampleValue: schemas.date.weekDay().getValue(),
-    getValue: schemas.date.weekDay().getValue,
+    getValue: (a) => schemas.date.weekDay().getValue(a),
     name: "Weekday",
     arguments: [],
     description: { en: "", es: "" },
   },
   {
     exampleValue: schemas.date.birthdate().getValue(),
-    getValue: schemas.date.birthdate().getValue,
+    getValue: (a) => schemas.date.birthdate().getValue(a),
     name: "BirthDate",
     arguments: [
       {
@@ -123,7 +123,7 @@ export const DateOptions: OptionSchema[] = [
   },
   {
     exampleValue: schemas.date.between().getValue(),
-    getValue: schemas.date.between().getValue,
+    getValue: (a) => schemas.date.between().getValue(a),
     name: "Date Between",
     arguments: [
       {

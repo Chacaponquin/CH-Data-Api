@@ -5,7 +5,7 @@ import { ARGUMENT_TYPE } from "../interfaces/fieldsTypes.enum";
 export const AddressOptions: OptionSchema[] = [
   {
     name: "Zip Code",
-    getValue: schemas.address.zipCode().getValue,
+    getValue: (a) => schemas.address.zipCode().getValue(a),
     exampleValue: schemas.address.zipCode().getValue(),
     arguments: [
       {
@@ -19,21 +19,21 @@ export const AddressOptions: OptionSchema[] = [
   {
     name: "Time Zone",
     exampleValue: schemas.address.timeZone().getValue(),
-    getValue: schemas.address.timeZone().getValue,
+    getValue: (a) => schemas.address.timeZone().getValue(a),
     arguments: [],
     description: { en: "", es: "" },
   },
   {
     name: "Cardinal Direction",
     exampleValue: schemas.address.cardinalDirection().getValue(),
-    getValue: schemas.address.cardinalDirection().getValue,
+    getValue: (a) => schemas.address.cardinalDirection().getValue(a),
     arguments: [],
     description: { en: "", es: "" },
   },
   {
     name: "Country",
     exampleValue: schemas.address.country().getValue(),
-    getValue: schemas.address.country().getValue,
+    getValue: (a) => schemas.address.country().getValue(a),
     arguments: [
       {
         argument: "continent",
@@ -55,7 +55,7 @@ export const AddressOptions: OptionSchema[] = [
   {
     name: "Country Code",
     exampleValue: schemas.address.countryCode().getValue(),
-    getValue: schemas.address.countryCode().getValue,
+    getValue: (a) => schemas.address.countryCode().getValue(a),
     arguments: [],
     description: { en: "", es: "" },
   },
