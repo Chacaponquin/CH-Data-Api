@@ -4,8 +4,8 @@ import { OptionsController } from "../../../shared/classes/OptionController";
 
 export const getRandomDataRoute = async (req: Request, res: Response) => {
   try {
-    const { parent, field } = req.params;
-    const { isArray, limit, ...queryArguments } = req.query;
+    const { parent, option } = req.params;
+    const { isArray, ...queryArguments } = req.query;
 
     const options = OptionsController.getApiOptions();
 
@@ -20,7 +20,7 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
       const optionFound = parentFound.options.find((f) => {
         return (
           chaca.utils.capitalizeText(f.name).toLowerCase() ===
-          chaca.utils.capitalizeText(field).toLowerCase()
+          chaca.utils.capitalizeText(option).toLowerCase()
         );
       });
 
@@ -31,8 +31,8 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
           returnValue = [];
 
           const newLimit =
-            typeof limit === "number" && limit > 0
-              ? limit
+            Number(isArray) && Number(isArray) > 0
+              ? Number(isArray)
               : schemas.dataType.number().getValue({ min: 2, max: 50 });
 
           for (let i = 0; i < newLimit; i++) {
@@ -42,9 +42,18 @@ export const getRandomDataRoute = async (req: Request, res: Response) => {
 
         res.json(returnValue).end();
       } else {
-        res.status(404).end();
+        res
+          .status(404)
+          .json({
+            error: `The type ${option} do not exists on parent ${parent}`,
+          })
+          .end();
       }
-    } else res.status(404).end();
+    } else
+      res
+        .status(404)
+        .json({ error: `The parent ${parent} do not exists` })
+        .end();
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ error: null }).end();

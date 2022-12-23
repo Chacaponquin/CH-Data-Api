@@ -7,7 +7,7 @@ export enum FILE_TYPE {
 }
 
 export enum DATA_TYPES {
-  SINGLE_VALUE = "SINGLE_VALUE",
+  SINGLE_VALUE = "SINGLE VALUE",
   MIXED = "MIXED",
   REF = "REF",
   CUSTOM = "CUSTOM",

@@ -2,5 +2,5 @@ import { Response, Request } from "express";
 import { OptionsController } from "../../../shared/classes/OptionController";
 
 export const getApiOptions = async (req: Request, res: Response) => {
-  res.json({ options: OptionsController.getApiOptions() });
+  res.json(OptionsController.getApiOptions());
 };

@@ -2,7 +2,7 @@ import express from "express";
 import { downloadData } from "./tasks/downloadData";
 import { getConfigFileOptionsRoute } from "./tasks/getConfigFileOptions";
 import { getFAQ } from "./tasks/getFAQ";
-import { getApiOptions } from "./tasks/getApiOption";
+import { getApiOptions } from "./tasks/getApiOptions";
 import { getNoUserLimitsRoute } from "./tasks/getNoUserLimits";
 
 const app = express.Router();
