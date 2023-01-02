@@ -25,11 +25,6 @@ export const DataTypeOptions: OptionSchema[] = [
         inputType: ARGUMENT_TYPE.NUMBER,
         description: { en: "", es: "" },
       },
-      {
-        argument: "precision",
-        inputType: ARGUMENT_TYPE.FLOAT,
-        description: { en: "", es: "" },
-      },
     ],
     description: { en: "", es: "" },
   },
@@ -97,12 +92,6 @@ export const DataTypeOptions: OptionSchema[] = [
       {
         argument: "max",
         inputType: ARGUMENT_TYPE.FLOAT,
-        description: { en: "", es: "" },
-      },
-      {
-        argument: "dataType",
-        inputType: ARGUMENT_TYPE.SELECT,
-        selectValues: ["Int", "Float"],
         description: { en: "", es: "" },
       },
     ],

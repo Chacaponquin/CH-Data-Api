@@ -10,10 +10,9 @@ import timedOut from "connect-timeout";
 import { Server } from "socket.io";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GithubStrategy } from "passport-github2";
-import { createContextUser } from "./shared/tasks/createContextUser";
 import { SocketTasks } from "./socket/SocketTasks";
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 
 const app: Express = express();
 
@@ -37,14 +36,7 @@ function haltOnTimedout(req: any, res: Response, next: any) {
 app.use(timedOut("300s"));
 app.use(haltOnTimedout);
 
-app.get("/", (req, res) => res.send("Hola Bienvenido"));
-
-app.use("/", createContextUser);
-
-app.use("/auth", ROUTES.AUTHENTICATION_ROUTES);
-app.use("/util", ROUTES.UTIL_ROUTES);
-app.use("/user", ROUTES.USER_ROUTES);
-app.use("/api", ROUTES.API_ROUTES);
+app.use("/", ROUTES);
 
 app.use(passport.initialize());
 app.use(passport.session());
