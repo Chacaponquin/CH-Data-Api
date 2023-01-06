@@ -1,4 +1,5 @@
-## Guia de Javascript
+<div class='flex w-full justify-center'>
+<img src='https://res.cloudinary.com/chaca-sa/image/upload/v1672701012/chaca/javascript_yaolhz.svg' width='150px'/></div>
 
 Hey!!! Quieres crear un valor con tus propias reglas utilizando
 Javascript? Pues este es tu sitio **Recuerda que puedes utilizar esta funcionalidad con otros lenguajes**

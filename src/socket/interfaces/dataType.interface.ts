@@ -1,5 +1,5 @@
 import { CODE_TYPES, DATA_TYPES } from "../../shared/constants/Types.enum";
-import { InputDatasetField, TypeSchema } from "./datasets.interface";
+import { InputDatasetField } from "./datasets.interface";
 
 export type FieldDataType =
   | CustomDataType
@@ -7,19 +7,29 @@ export type FieldDataType =
   | SingleValueDataType
   | RefDataType;
 
+export type InputArguments = { [key: string]: string | boolean | number };
+
+export interface TypeSchema {
+  parent: string;
+  type: string;
+  args: InputArguments;
+}
+
 export type RefDataType = {
   type: DATA_TYPES.REF;
-  ref: string;
-  fieldRef: string;
+  ref: string[];
 };
+
 export type SingleValueDataType = {
   type: DATA_TYPES.SINGLE_VALUE;
   fieldType: TypeSchema;
 };
+
 export type MixedDataType = {
   type: DATA_TYPES.MIXED;
   object: InputDatasetField<SingleValueDataType>[];
 };
+
 export type CustomDataType = {
   type: DATA_TYPES.CUSTOM;
   code: string;

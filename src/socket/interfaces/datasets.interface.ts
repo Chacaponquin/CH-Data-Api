@@ -4,7 +4,7 @@ export interface ReturnDataset<T> {
   id: string;
   name: string;
   documents: {
-    [path: string]: T | T[];
+    [key: string]: T | T[];
   }[];
 }
 
@@ -22,19 +22,15 @@ export interface InputDataset {
   fields: InputDatasetField[];
 }
 
+export type InputFieldIsArray = null | {
+  min: number;
+  max: number;
+};
+
 export interface InputDatasetField<T = FieldDataType> {
   name: string;
   id: string;
   dataType: T;
-  isPosibleNull: boolean;
-  isArray: null | {
-    min: number;
-    max: number;
-  };
-}
-
-export interface TypeSchema {
-  parent: string;
-  type: string;
-  args: { [key: string]: string | boolean | number };
+  isPosibleNull: number;
+  isArray: InputFieldIsArray;
 }

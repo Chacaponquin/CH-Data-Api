@@ -1,8 +1,18 @@
 import { chaca } from "chaca";
-import { ApiOption } from "../interfaces/fields.interface";
+import { ApiOption, OptionSchema } from "../interfaces/fields.interface";
 import Options from "../options";
 
 export abstract class OptionsController {
+  public static getOptionsArray() {
+    let returnOptions = [] as { parent: string; options: OptionSchema[] }[];
+
+    for (const [key, options] of Object.entries(Options)) {
+      returnOptions.push({ parent: key, options });
+    }
+
+    return returnOptions;
+  }
+
   public static getApiOptions(): ApiOption[] {
     let returnOptions = [] as ApiOption[];
 
