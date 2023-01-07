@@ -6,7 +6,7 @@ import { ChacaFileError } from "../errors/ChacaFileError";
 import AdmZip from "adm-zip";
 
 export class FileCreator {
-  private PUBLIC_ROUTE = "../../../public/";
+  private readonly PUBLIC_ROUTE = "../../../data/";
 
   constructor(
     private readonly data: ReturnDataset<any>[],

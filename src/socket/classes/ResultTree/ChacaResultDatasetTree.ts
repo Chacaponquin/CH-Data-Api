@@ -7,14 +7,10 @@ import { FieldNode } from "./FieldNode";
 export class ChacaResultDatasetTree {
   private resultDocuments: Array<DocumentTree> = [];
 
-  constructor(
-    public readonly id: string,
-    public readonly name: string,
-    totalDocuments: number
-  ) {
-    for (let i = 0; i < totalDocuments; i++) {
-      this.resultDocuments.push(new DocumentTree());
-    }
+  constructor(public readonly id: string, public readonly name: string) {}
+
+  public insertDocument(document: DocumentTree): void {
+    this.resultDocuments.push(document);
   }
 
   public getDocumentsArray() {
@@ -36,14 +32,6 @@ export class ChacaResultDatasetTree {
       throw new ChacaDatasetError(
         `The document on index ${index} doesn't exists`
       );
-  }
-
-  public setNodeByLocation(
-    node: FieldNode,
-    location: string[],
-    indexDoc: number
-  ) {
-    this.resultDocuments[indexDoc].setNodeByLocation(node, location);
   }
 
   public getRefFieldValue(location: string[]): unknown {

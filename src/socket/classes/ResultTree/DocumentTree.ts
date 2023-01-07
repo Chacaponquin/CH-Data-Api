@@ -1,10 +1,15 @@
 import { FieldNode } from "./FieldNode";
 import { MixedFieldNode } from "./MixedFieldNode";
+import { ResultFieldNode } from "./ResultFieldNode";
 
 export class DocumentTree {
-  public fields: Array<FieldNode> = [];
+  private fields: Array<FieldNode> = [];
 
   constructor() {}
+
+  public insertNode(n: FieldNode): void {
+    this.fields.push(n);
+  }
 
   public getDataObject(): { [key: string]: unknown | unknown[] } {
     let returnObject = {};
@@ -14,20 +19,6 @@ export class DocumentTree {
     });
 
     return returnObject;
-  }
-
-  public setNodeByLocation(node: FieldNode, location: string[]) {
-    if (location.length === 0) {
-      this.fields.push(node);
-    } else {
-      let inserted = false;
-
-      for (let i = 0; i < this.fields.length && !inserted; i++) {
-        const field = this.fields[i];
-        if (field.id === location[0] && field instanceof MixedFieldNode)
-          inserted = field.setNodeByLocation(node, location.slice(1));
-      }
-    }
   }
 
   public getValueByLocation(location: string[]): unknown {

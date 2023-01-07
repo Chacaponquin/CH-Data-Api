@@ -1,10 +1,10 @@
-import { FieldNode } from "./FieldNode";
+import { FieldNode, FieldNodeProps } from "./FieldNode";
 
 export class ResultFieldNode extends FieldNode {
   private value: unknown | unknown[];
 
-  constructor(id: string, name: string, value: unknown) {
-    super(id, name);
+  constructor(config: FieldNodeProps, value: unknown) {
+    super(config);
     this.value = value;
   }
 

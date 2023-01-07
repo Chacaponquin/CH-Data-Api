@@ -26,7 +26,7 @@ export abstract class Node {
     return this.config.isPosibleNull;
   }
 
-  get generateConfig() {
-    return { isArray: this.isArray, isPosibleNull: this.isPosibleNull };
+  get fieldConfig() {
+    return { id: this.id, isPosibleNull: this.isPosibleNull, name: this.name };
   }
 }
