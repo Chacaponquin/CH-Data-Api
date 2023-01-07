@@ -8,13 +8,6 @@ export interface ReturnDataset<T> {
   }[];
 }
 
-export interface IFieldTransform<T = FieldDataType> {
-  getValue(): any;
-  setValue(value: any): void;
-  getFieldSchema(): InputDatasetField<T>;
-  setFieldSchema(field: InputDatasetField<T>): void;
-}
-
 export interface InputDataset {
   name: string;
   id: string;

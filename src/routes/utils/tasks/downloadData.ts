@@ -4,5 +4,11 @@ import path from "path";
 export const downloadData = (req: Request, res: Response) => {
   const { file } = req.params;
 
-  res.download(path.join(__dirname, "../../../../data", file));
+  const filePath = path.join(__dirname, "../../../../data", file);
+
+  res.download(filePath, (error) => {
+    if (error) {
+      console.log(error);
+    }
+  });
 };

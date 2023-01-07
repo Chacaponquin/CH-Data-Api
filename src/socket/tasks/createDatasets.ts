@@ -1,9 +1,9 @@
-import { InputDataset, ReturnDataset } from "../interfaces/datasets.interface";
+import { InputDataset } from "../interfaces/datasets.interface";
 import { InputConfigSchema } from "../../shared/interfaces/config.interface";
 import { FileCreator } from "../classes/FileCreator";
-import { DatasetsCreator } from "../classes/DatasetsCreator";
 import { Socket } from "socket.io";
 import { JwtActions } from "../../routes/authentication/utils/JwtActions";
+import { DatasetsController } from "../classes/DatasetsController";
 
 export const createDatasets = async (
   socket: Socket,
@@ -19,16 +19,16 @@ export const createDatasets = async (
     const config = args.config as InputConfigSchema;
 
     // crear datos
-    const creatorDatasets = new DatasetsCreator(socket, datasets);
-    const allData = await creatorDatasets.createData();
+    const creatorDatasets = new DatasetsController(socket, datasets);
+    const allData = creatorDatasets.createData();
 
     // crear archivo
-    const creator = new FileCreator(allData, config);
-    const url = await creator.generateFile();
+    const fileCreator = new FileCreator(allData, config);
+    const url = await fileCreator.generateFile();
 
     // guardar schema en el historial de usuario
-    if (currentUser && config.saveSchema)
-      await creatorDatasets.saveDataSchema(currentUser._id);
+    //if (currentUser && config.saveSchema)
+    //await creatorDatasets.saveDataSchema(currentUser._id);
 
     socket.emit("getDownUrl", { downUrl: url });
   } catch (error) {

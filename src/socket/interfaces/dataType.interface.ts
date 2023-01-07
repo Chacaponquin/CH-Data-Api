@@ -1,4 +1,4 @@
-import { CODE_TYPES, DATA_TYPES } from "../../shared/constants/Types.enum";
+import { DATA_TYPES } from "../../shared/constants/Types.enum";
 import { InputDatasetField } from "./datasets.interface";
 
 export type FieldDataType =
@@ -33,5 +33,4 @@ export type MixedDataType = {
 export type CustomDataType = {
   type: DATA_TYPES.CUSTOM;
   code: string;
-  codeType: CODE_TYPES;
 };

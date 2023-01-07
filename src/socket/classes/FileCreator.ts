@@ -3,13 +3,14 @@ import { ReturnDataset } from "../interfaces/datasets.interface";
 import { FILE_TYPE } from "../../shared/constants/Types.enum";
 import { chaca, schemas } from "chaca";
 import { ChacaFileError } from "../errors/ChacaFileError";
+import path from "path";
 import AdmZip from "adm-zip";
 
 export class FileCreator {
-  private readonly PUBLIC_ROUTE = "../../../data/";
+  private readonly PUBLIC_ROUTE = "../../../data";
 
   constructor(
-    private readonly data: ReturnDataset<any>[],
+    private readonly data: ReturnDataset<unknown>[],
     private readonly config: InputConfigSchema
   ) {
     if (!config)
@@ -24,10 +25,12 @@ export class FileCreator {
       const allRoutes = [] as string[];
 
       for (const dat of this.data) {
+        const fileRoute = path.join(__dirname, this.PUBLIC_ROUTE);
+
         const route = await chaca.export(dat.documents, {
-          fileName: chaca.utils.capitalizeText(dat.name),
+          fileName: chaca.utils.camelCaseText(dat.name),
           format: fileType,
-          location: this.PUBLIC_ROUTE,
+          location: fileRoute,
         });
 
         allRoutes.push(route);
@@ -39,15 +42,19 @@ export class FileCreator {
     }
   }
 
+  private createPublicRoute(zipName: string): string {
+    return `util/downloadData/${zipName}`;
+  }
+
   private createFilesZip(allRoutes: string[]): string {
     const zp = new AdmZip();
     const zipName = `data${schemas.id.mongodbID().getValue()}.zip`;
-    const zipPath = `${this.PUBLIC_ROUTE}${zipName}`;
+    const zipPath = path.join(__dirname, `${this.PUBLIC_ROUTE}/${zipName}`);
 
     for (const r of allRoutes) zp.addLocalFile(r);
 
     zp.writeZip(zipPath);
 
-    return zipPath;
+    return this.createPublicRoute(zipName);
   }
 }

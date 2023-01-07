@@ -12,8 +12,3 @@ export enum DATA_TYPES {
   REF = "REF",
   CUSTOM = "CUSTOM",
 }
-
-export enum CODE_TYPES {
-  JAVASCRIPT = "JAVASCRIPT",
-  PYTHON = "PYTHON",
-}

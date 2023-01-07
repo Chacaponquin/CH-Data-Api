@@ -14,7 +14,7 @@ export class CustomValueNode extends Node {
     );
 
     try {
-      const func = new Function(contentCode);
+      const func = new Function("fields", "utils", contentCode);
       const value = func(fields, chaca.utils);
 
       if (value === undefined)
